@@ -100,11 +100,10 @@ public class FrontEnd {
         long getResult3Time = System.currentTimeMillis() - startTime;
         times.add(getResult3Time);
         results.add(result3);
-        //String majority = getMajority();
-        //checkSoftwareFailure(majority);
-        Thread.sleep(1000);
         long getResult4Time = System.currentTimeMillis() - startTime;
         times.add(getResult4Time);
         checkProcessCrash(times);
+        String majority = getMajority();
+        checkSoftwareFailure(majority);
     }
 }
