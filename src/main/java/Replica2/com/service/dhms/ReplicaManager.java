@@ -1,4 +1,4 @@
-package com.service.dhms;
+package Replica2.com.service.dhms;
 
 import javax.xml.ws.Endpoint;
 import java.io.IOException;
