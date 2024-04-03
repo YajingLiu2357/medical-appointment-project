@@ -1,3 +1,5 @@
 /.idea/
 /target/
 .DS_Store
+/src/main/java/Replica2/com/service/dhms/logs/
+/src/main/java/Replica2/com/service/dhms/data/
