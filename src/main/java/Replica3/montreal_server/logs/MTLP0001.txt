@@ -1,0 +1,4 @@
+[2024-03-18 17:22:29.802] Appointment swaped for patient #MTLP0001 of Physician Appointment ID #MTLM010224 to Surgeon Appointment ID #MTLM040424
+[2024-03-18 17:24:14.337] Appointment swaped for patient #MTLP0001 of Physician Appointment ID #MTLM040424 to Dentist Appointment ID #SHEE050524
+[2024-03-25 13:32:46.442] Appointment swaped for patient #MTLP0001 of Physician Appointment ID #MTLM010224 to Surgeon Appointment ID #MTLM010424
+[2024-03-25 21:35:53.884] Appointment swaped for patient #MTLP0001 of Surgeon Appointment ID #MTLM010224 to Physician Appointment ID #QUEM05042025
