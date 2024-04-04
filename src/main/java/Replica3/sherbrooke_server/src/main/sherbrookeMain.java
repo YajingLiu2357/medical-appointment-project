@@ -2,8 +2,8 @@ package Replica3.sherbrooke_server.src.main;
 
 import javax.xml.ws.Endpoint;
 
-import ws.DhmsSherbrookeImplementation;
-import ws.ServerCommunication;
+import Replica3.sherbrooke_server.src.ws.DhmsSherbrookeImplementation;
+import Replica3.sherbrooke_server.src.ws.ServerCommunication;
 
 public class sherbrookeMain {
 

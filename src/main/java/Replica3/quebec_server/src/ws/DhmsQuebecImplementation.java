@@ -12,7 +12,7 @@ import javax.jws.*;
 import javax.jws.soap.SOAPBinding;
 import javax.jws.soap.SOAPBinding.Style;
 
-@WebService(endpointInterface="ws.DhmsQuebec")
+@WebService(endpointInterface="Replica3.quebec_server.src.ws.DhmsQuebec")
 @SOAPBinding(style=Style.RPC)
 public class DhmsQuebecImplementation implements DhmsQuebec {
 	public String hello() {

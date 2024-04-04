@@ -14,7 +14,7 @@ import javax.jws.soap.SOAPBinding;
 import javax.jws.soap.SOAPBinding.Style;
 import javax.swing.text.StringContent;
 
-@WebService(endpointInterface="ws.DhmsMontreal")
+@WebService(endpointInterface="Replica3.montreal_server.src.ws.DhmsMontreal")
 @SOAPBinding(style=Style.RPC)
 public class DhmsMontrealImplementation implements DhmsMontreal {
 	public String hello() {

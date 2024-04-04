@@ -2,8 +2,8 @@ package Replica3.quebec_server.src.main;
 
 import javax.xml.ws.Endpoint;
 
-import ws.DhmsQuebecImplementation;
-import ws.ServerCommunication;
+import Replica3.quebec_server.src.ws.DhmsQuebecImplementation;
+import Replica3.quebec_server.src.ws.ServerCommunication;
 
 public class quebecMain {
 
