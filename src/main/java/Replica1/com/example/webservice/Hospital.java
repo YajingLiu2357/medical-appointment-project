@@ -1,4 +1,4 @@
-package com.example.webservice;
+package Replica1.com.example.webservice;
 
 import javax.jws.WebMethod;
 import javax.jws.WebService;

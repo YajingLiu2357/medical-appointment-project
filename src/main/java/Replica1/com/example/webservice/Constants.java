@@ -1,4 +1,4 @@
-package com.example.webservice;
+package Replica1.com.example.webservice;
 
 public final class Constants {
     // all success requests
@@ -17,4 +17,9 @@ public final class Constants {
     // List<String>  toString() e.g. [MTLP0002 QUEA100224 Physician]
     // book appointment no capacity; swap new appointment no capacity
     public static final String NO_CAPACITY = "fail because appointment does not exist or no capacity";
+
+    public static final String LOG_FILE_PATH = "./src/main/java/Replica1/com/example/webservice/log/";
+    public static final String MONTREAL_TXT = "Montreal.txt";
+    public static final String QUEBEC_TXT = "Quebec.txt";
+    public static final String SHERBROOKE_TXT = "Sherbrooke.txt";
 }
