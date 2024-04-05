@@ -1,0 +1,6 @@
+2024/04/05 00:26:05 Add appointment. Request parameters: MTLA080224 Physician 4 Request: success Response: success
+2024/04/05 00:26:17 Add appointment. Request parameters: MTLA080224 Physician 4 Request: success Response: fail because appointment already exists
+2024/04/05 00:26:17 List appointment availability. Request parameters: Physician Request: success Response: {MTLA080224=4}
+2024/04/05 00:37:09 Add appointment. Request parameters: MTLA080224 Physician 4 Request: success Response: success
+2024/04/05 00:37:09 Add appointment. Request parameters: MTLA080224 Physician 4 Request: success Response: fail because appointment already exists
+2024/04/05 00:37:09 List appointment availability. Request parameters: Physician Request: success Response: {MTLA080224=4}
