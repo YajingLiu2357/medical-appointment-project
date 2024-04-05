@@ -1,4 +1,4 @@
-package com.example.webservice;
+package Replica1.com.example.webservice;
 
 import java.net.MalformedURLException;
 import java.rmi.NotBoundException;

@@ -6,6 +6,8 @@ import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 import java.io.*;
 import java.net.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -614,6 +616,64 @@ public class MontrealServer implements Appointment {
                 }
             }
         } catch(IOException e){
+            e.printStackTrace();
+        }
+    }
+    public void recoverFromLog(){
+        String filePath = Constants.LOG_FILE_PATH + Constants.MONTREAL_TXT;
+        try {
+            // Recover from log
+            FileReader fileReader = new FileReader(filePath);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            String lineInFile;
+            ArrayList<String> logs = new ArrayList<>();
+            while ((lineInFile = bufferedReader.readLine()) != null) {
+                logs.add(lineInFile);
+            }
+            PrintWriter writer = new PrintWriter(filePath);
+            writer.print("");
+            writer.close();
+            for (String line : logs) {
+                if (line.contains(Constants.ADD_APPOINTMENT)){
+                    String [] lineSplit = line.split(Constants.SPACE);
+                    int parameterIndex = Arrays.asList(lineSplit).indexOf("parameters:");
+                    String appointmentID = lineSplit[parameterIndex + 1];
+                    String appointmentType = lineSplit[parameterIndex + 2];
+                    int capacity = Integer.parseInt(lineSplit[parameterIndex + 3]);
+                    addAppointment(appointmentID, appointmentType, capacity);
+                }else if (line.contains(Constants.REMOVE_APPOINTMENT)){
+                    String [] lineSplit = line.split(Constants.SPACE);
+                    int parameterIndex = Arrays.asList(lineSplit).indexOf("parameters:");
+                    String appointmentID = lineSplit[parameterIndex + 1];
+                    String appointmentType = lineSplit[parameterIndex + 2];
+                    removeAppointment(appointmentID, appointmentType);
+                }else if (line.contains(Constants.BOOK_APPOINTMENT)){
+                    String [] lineSplit = line.split(Constants.SPACE);
+                    int parameterIndex = Arrays.asList(lineSplit).indexOf("parameters:");
+                    String patientID = lineSplit[parameterIndex + 1];
+                    String appointmentID = lineSplit[parameterIndex + 2];
+                    String appointmentType = lineSplit[parameterIndex + 3];
+                    bookAppointment(patientID, appointmentID, appointmentType);
+                }else if (line.contains(Constants.CANCEL_APPOINTMENT)){
+                    String [] lineSplit = line.split(Constants.SPACE);
+                    int parameterIndex = Arrays.asList(lineSplit).indexOf("parameters:");
+                    String patientID = lineSplit[parameterIndex + 1];
+                    String appointmentID = lineSplit[parameterIndex + 2];
+                    cancelAppointment(patientID, appointmentID);
+                }else if (line.contains(Constants.SWAP_APPOINTMENT)){
+                    String [] lineSplit = line.split(Constants.SPACE);
+                    int parameterIndex = Arrays.asList(lineSplit).indexOf("parameters:");
+                    String patientID = lineSplit[parameterIndex + 1];
+                    String oldAppointmentID = lineSplit[parameterIndex + 2];
+                    String oldAppointmentType = lineSplit[parameterIndex + 3];
+                    String newAppointmentID = lineSplit[parameterIndex + 4];
+                    String newAppointmentType = lineSplit[parameterIndex + 5];
+                    swapAppointment(patientID, oldAppointmentID, oldAppointmentType, newAppointmentID, newAppointmentType);
+                }
+            }
+            fileReader.close();
+            System.out.println("Finished recovering from log");
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
