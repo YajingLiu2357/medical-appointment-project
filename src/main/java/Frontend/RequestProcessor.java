@@ -47,10 +47,7 @@ public class RequestProcessor {
         return results;
     }
 
-    public List<String> BookAppointment(String userid_, String city_, String time_, String date_, String month_, String year_, String type_) {
-        String appointmentID = city_ + time_ + date_ + month_ + year_;
-        String exchangedAvailableAppointments = Type.ExchangeAppointTypeCompatibility(Type.AppointmentType.valueOf(type_));
-
+    public List<String> BookAppointment(String userid_, String appointmentID, String exchangedAvailableAppointments) {
         List<String> results = new ArrayList<>();
         String res_replica1 = replica1Connection.bookAppointment(userid_, appointmentID, exchangedAvailableAppointments);
         //todo: replica2, replica3, replica4
@@ -87,9 +84,8 @@ public class RequestProcessor {
         return results;
     }
 
-    public List<String> RemoveAppointment(String appointmentID, String type_) throws RemoteException, NotBoundException {
+    public List<String> RemoveAppointment(String appointmentID, String exchangedAvailableAppointments) throws RemoteException, NotBoundException {
         List<String> results = new ArrayList<>();
-        String exchangedAvailableAppointments = Type.ExchangeAppointTypeCompatibility(Type.AppointmentType.valueOf(type_));
         String res_replica1 = replica1Connection.removeAppointment(appointmentID, exchangedAvailableAppointments);
         results.add(res_replica1);
         //todo: replica2, replica3, replica4
@@ -107,13 +103,11 @@ public class RequestProcessor {
         return results;
     }
 
-    public List<String> SwapAppointment(String cityType, String patientID, String oldAppointmentID, String oldAppointmentType, String newAppointmentID, String newAppointmentType)
+    public List<String> SwapAppointment(String patientID, String oldAppointmentID, String oldAppType, String newAppointmentID, String newAppType)
     {
-        String oldAppType = Type.ExchangeAppointTypeCompatibility(Type.AppointmentType.valueOf(oldAppointmentType));
-        String newAppType = Type.ExchangeAppointTypeCompatibility(Type.AppointmentType.valueOf(newAppointmentType));
-
         List<String> results = new ArrayList<>();
-        String res_replica1 = replica1Connection.swapAppointment(patientID, oldAppointmentID, oldAppType,
+        String res_replica1 = replica1Connection.swapAppointment(patientID,
+                oldAppointmentID, oldAppType,
                 newAppointmentID, newAppType);
         results.add(res_replica1);
         //todo: replica2, replica3, replica4

@@ -4,8 +4,11 @@ package com.example.webservice;
 import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.List;
 
 public class ClientInterface {
+    public String userID;
+
     private static ClientInterface instance = null;
 
     public static ClientInterface getInstance() {
@@ -19,25 +22,23 @@ public class ClientInterface {
     }
 
     public String BookAppointment(String userid_, String city_, String time_, String date_, String month_, String year_, String type_) {
-        String appointmentID = city_ + time_ + date_ + month_ + year_;
-        String exchangedAvailableAppointments = Type.ExchangeAppointTypeCompatibility(Type.AppointmentType.valueOf(type_));
-        String res = RequestProcessor.getInstance().BookAppointment(userid_, appointmentID, exchangedAvailableAppointments);
 
-        return res;
+        List<Object> processedInput = DataProcessor.getInstance().BookAppointmentDataProcessor(userid_, city_, time_, date_, month_, year_, type_);
+        List<String> rawResults = RequestProcessor.getInstance().BookAppointment((String) processedInput.get(0), (String) processedInput.get(1), (String) processedInput.get(2));
+        String result = ResultProcessor.getInstance().BookAppointmentResultsProcess(rawResults);
+        String processedResult = DataProcessor.getInstance().BookAppointmentResultsProcess(result);
+        return processedResult;
     }
 
-    public String CancelAppointment(String appointmentID) throws RemoteException, NotBoundException {
-        String res = centralPlatform.cancelAppointment(userID, appointmentID);
-        try{
-            clientLog.WriteStr("Cancel Appointment Operation ID:" + appointmentID + " Res:" + String.valueOf(res));
-        }
-        catch (IOException e){
-            throw new RuntimeException(e);
-        }
-        return res;
+    public String CancelAppointment(String appointmentID)  {
+        List<Object> processedInput = DataProcessor.getInstance().CancelAppointmentDataProcessor(userID, appointmentID);
+        List<String> rawResults = RequestProcessor.getInstance().CancelAppointment((String) processedInput.get(0), (String) processedInput.get(1));
+        String result = ResultProcessor.getInstance().BookAppointmentResultsProcess(rawResults);
+        String processedResult = DataProcessor.getInstance().BookAppointmentResultsProcess(result);
+        return processedResult;
     }
 
-    public String[] ViewBookedAppointments() throws RemoteException, InterruptedException, NotBoundException {
+    public String[] ViewBookedAppointments() {
         String rawRes = centralPlatform.getAppointmentSchedule(userID);
         System.out.println("UnmarshallingAppointmentsAndType:" + rawRes);
         String[] ret = new String[1];
@@ -45,7 +46,8 @@ public class ClientInterface {
         return ret;
     }
 
-    public String AddAppointment(String city_, String time_, String date_, String month_, String year_, String type_, int capacity) throws RemoteException, NotBoundException {
+    public String AddAppointment(String city_, String time_, String date_, String month_, String year_, String type_, int capacity)
+    {
         String appointmentID = city_ + time_ + date_ + month_ + year_;
 
         String exchangedAvailableAppointments = Type.ExchangeAppointTypeCompatibility(Type.AppointmentType.valueOf(type_));
@@ -59,7 +61,7 @@ public class ClientInterface {
         return res;
     }
 
-    public String RemoveAppointment(String appointmentID, String type_) throws RemoteException, NotBoundException {
+    public String RemoveAppointment(String appointmentID, String type_) {
         String exchangedAvailableAppointments = Type.ExchangeAppointTypeCompatibility(Type.AppointmentType.valueOf(type_));
         String res = centralPlatform.removeAppointment(appointmentID, exchangedAvailableAppointments);
         try{
@@ -71,7 +73,7 @@ public class ClientInterface {
         return res;
     }
 
-    public String[] ViewAvailableAppointments() throws RemoteException, InterruptedException, NotBoundException {
+    public String[] ViewAvailableAppointments() {
         String exchangedAvailableAppointments = Type.ExchangeAppointTypeCompatibility(Type.AppointmentType.PHYS);
         String rawValiableRes = centralPlatform.listAppointmentAvailability(exchangedAvailableAppointments);
         rawValiableRes = rawValiableRes.substring(1, rawValiableRes.length()-1);
@@ -85,7 +87,8 @@ public class ClientInterface {
         return temp1;
     }
 
-    public String SwapAppointment(String cityType, String patientID, String oldAppointmentID, String oldAppointmentType, String newAppointmentID, String newAppointmentType)
+    public String SwapAppointment(String cityType, String patientID, String oldAppointmentID, String oldAppointmentType,
+                                  String newAppointmentID, String newAppointmentType)
     {
         String oldAppType = Type.ExchangeAppointTypeCompatibility(Type.AppointmentType.valueOf(oldAppointmentType));
         String newAppType = Type.ExchangeAppointTypeCompatibility(Type.AppointmentType.valueOf(newAppointmentType));
