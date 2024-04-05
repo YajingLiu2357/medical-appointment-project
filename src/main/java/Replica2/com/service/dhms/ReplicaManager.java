@@ -41,21 +41,66 @@ public class ReplicaManager {
                 DatagramPacket replyPacketBook = new DatagramPacket(reply.getBytes(), reply.length(), address, port);
                 socket.send(replyPacketBook);
                 if (replicaErrorNo == replicaNo){
-                    ip = InetAddress.getLocalHost();
-                    MontrealServer mtl = new MontrealServer();
-                    QuebecServer que = new QuebecServer();
-                    SherbrookeServer she = new SherbrookeServer();
-                    endpointMTL.stop();
-                    endpointQUE.stop();
-                    endpointSHE.stop();
-                    Endpoint endpointMTLNew = Endpoint.publish("http://" + ip.getHostAddress() + ":8080/appointment/mtl", mtl);
-                    Endpoint endpointQUENew = Endpoint.publish("http://" + ip.getHostAddress() + ":8080/appointment/que", que);
-                    Endpoint endpointSHENew = Endpoint.publish("http://" + ip.getHostAddress() + ":8080/appointment/she", she);
-                    System.out.println("Replica2 recovers services." );
-                    mtl.recoverFromLog();
-                    que.recoverFromLog();
-                    she.recoverFromLog();
-                    System.out.println("Replica2 finishes recovery." );
+                    if (errorType == "Software failure"){
+                        ip = InetAddress.getLocalHost();
+                        MontrealServer mtl = new MontrealServer();
+                        QuebecServer que = new QuebecServer();
+                        SherbrookeServer she = new SherbrookeServer();
+                        endpointMTL.stop();
+                        endpointQUE.stop();
+                        endpointSHE.stop();
+                        Endpoint endpointMTLNew = Endpoint.publish("http://" + ip.getHostAddress() + ":8080/appointment/mtl", mtl);
+                        Endpoint endpointQUENew = Endpoint.publish("http://" + ip.getHostAddress() + ":8080/appointment/que", que);
+                        Endpoint endpointSHENew = Endpoint.publish("http://" + ip.getHostAddress() + ":8080/appointment/she", she);
+                        System.out.println("Replica2 recovers services." );
+                        mtl.recoverFromLog();
+                        que.recoverFromLog();
+                        she.recoverFromLog();
+                        System.out.println("Replica2 finishes recovery." );
+                    }else if (errorType == "Process crash"){
+                        ip = InetAddress.getLocalHost();
+                        MontrealServer mtl = new MontrealServer();
+                        QuebecServer que = new QuebecServer();
+                        SherbrookeServer she = new SherbrookeServer();
+                        endpointMTL.stop();
+                        endpointQUE.stop();
+                        endpointSHE.stop();
+                        Endpoint endpointMTLNew = Endpoint.publish("http://" + ip.getHostAddress() + ":8080/appointment/mtl", mtl);
+                        Endpoint endpointQUENew = Endpoint.publish("http://" + ip.getHostAddress() + ":8080/appointment/que", que);
+                        Endpoint endpointSHENew = Endpoint.publish("http://" + ip.getHostAddress() + ":8080/appointment/she", she);
+                        Thread webServicesThread = new Thread(() -> {
+                            String[] arguments = new String[] {"123"};
+                            try {
+                                MontrealServer.main(arguments);
+                            } catch (SocketException e) {
+                                throw new RuntimeException(e);
+                            }
+                        });
+                        webServicesThread.start();
+                        Thread webServicesThread2 = new Thread(() -> {
+                            String[] arguments = new String[] {"123"};
+                            try {
+                                QuebecServer.main(arguments);
+                            } catch (SocketException e) {
+                                throw new RuntimeException(e);
+                            }
+                        });
+                        webServicesThread2.start();
+                        Thread webServicesThread3 = new Thread(() -> {
+                            String[] arguments = new String[] {"123"};
+                            try {
+                                SherbrookeServer.main(arguments);
+                            } catch (SocketException e) {
+                                throw new RuntimeException(e);
+                            }
+                        });
+                        webServicesThread3.start();
+                        System.out.println("Replica2 recovers services." );
+                        mtl.recoverFromLog();
+                        que.recoverFromLog();
+                        she.recoverFromLog();
+                        System.out.println("Replica2 finishes recovery." );
+                    }
                 }
             }
         } catch(IOException e){
