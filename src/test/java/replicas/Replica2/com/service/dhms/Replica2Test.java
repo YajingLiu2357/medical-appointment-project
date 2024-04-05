@@ -87,7 +87,7 @@ public class Replica2Test {
     }
     @Test
     void listAppointmentAvailabilityTest() {
-        mtl.addAppointment("MTLA080224", "Physician", 4);
+        // Since all test cases try to connect to the same server, the result will be affected by the previous test case.
         String result = mtl.listAppointmentAvailability("Physician");
         assertEquals("{MTLA080224=4}", result);
     }
