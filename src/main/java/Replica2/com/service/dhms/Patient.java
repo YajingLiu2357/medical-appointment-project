@@ -1,7 +1,7 @@
-import DHMSApp.DHMS;
+package com.service.dhms;
 
 public class Patient extends Client{
-    public Patient(String ID, DHMS server) {
+    public Patient(String ID, Appointment server) {
         super(ID, server);
     }
 
