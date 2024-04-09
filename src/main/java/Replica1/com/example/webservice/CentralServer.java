@@ -67,7 +67,7 @@ public class CentralServer {
     public String cancelAppointment(String patientID, String appointmentID){
         Type.UserEntity userInstance = new Type.UserEntity();
         userInstance.DeserializeUser(patientID);
-        return GetCityOpr(userInstance.city).removeAppointment(patientID, appointmentID);
+        return GetCityOpr(userInstance.city).cancelAppointment(patientID, appointmentID);
     }
 
     public String swapAppointment(String patientID, String oldAppointmentID, String oldAppointmentType, String newAppointmentID, String newAppointmentType){
