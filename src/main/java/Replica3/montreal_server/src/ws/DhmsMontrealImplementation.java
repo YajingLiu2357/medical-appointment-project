@@ -21,13 +21,13 @@ public class DhmsMontrealImplementation implements DhmsMontreal {
 		return "Hello world";
 	}
 	//schedule for individual patient
-    public String[] get_appointment_schedule(String patient_id) {
+    public String getAppointmentSchedule(String patient_id) {
         database db = new database();
         String[] records = db.patients_appointment.get(patient_id);
-        return records;
+        return records.toString();
     }
 
-    public String add_appointment(String appointment_id, String type, String capacity) {
+    public String addAppointment(String appointment_id, String type, int capacity) {
         String message = "";
         Integer flag = 0;
 
@@ -47,7 +47,7 @@ public class DhmsMontrealImplementation implements DhmsMontreal {
         }else {
             //storing data in hashmap
         	Map<String, String> appointment_capacity = new HashMap<>();
-        	appointment_capacity.put(appointment_id, capacity);
+        	appointment_capacity.put(appointment_id, String.valueOf(capacity));
             db.appointments.put(type, appointment_capacity);
 
             //creating log file and keeping records
@@ -73,7 +73,7 @@ public class DhmsMontrealImplementation implements DhmsMontreal {
         return message;
     }
 
-    public String book_appointment(String patient_id, String appointment_id, String type) {
+    public String bookAppointment(String patient_id, String appointment_id, String type) {
         String message = "";
         String location = "";
         Integer flag = 0;
@@ -165,7 +165,7 @@ public class DhmsMontrealImplementation implements DhmsMontreal {
         return message;
     }
 
-    public String remove_appointment(String appointment_id, String type) {
+    public String removeAppointment(String appointment_id, String type) {
         String message = "";
         Integer flag = 0;
 
@@ -217,7 +217,7 @@ public class DhmsMontrealImplementation implements DhmsMontreal {
         return message;
     }
 
-    public String cancel_appointment(String appointment_id, String patient_id, String type) {
+    public String cancelAppointment( String patient_id, String appointment_id) {
         String message = "";
         Integer flag = 0;
 
@@ -249,7 +249,7 @@ public class DhmsMontrealImplementation implements DhmsMontreal {
             db.patients_appointment.replace(patient_id, finalAppointment_ids);
             for(Map.Entry<String, Map<String, String>> a : db.appointments.entrySet()){
                 for (Map.Entry<String, String> b : a.getValue().entrySet()){
-                    if (b.getKey().equals(appointment_id) && a.getKey().equals(type)){
+                    if (b.getKey().equals(appointment_id)){
                         Integer capacity = (Integer.valueOf(b.getValue()) + 1);
                         a.getValue().replace(appointment_id, capacity.toString());
                     }
@@ -262,20 +262,20 @@ public class DhmsMontrealImplementation implements DhmsMontreal {
                 if (log_file.createNewFile()) {
                     //client file writer
                     FileWriter log_file_writer = new FileWriter("D:\\web_services\\montreal_server\\logs\\"+ patient_id +".txt");
-                    log_file_writer.write("[" + new Timestamp(System.currentTimeMillis()) + "] Appointment canceled for patient #" + patient_id + " of "+ type +" Appointment ID #" + appointment_id  + "\n");
+                    log_file_writer.write("[" + new Timestamp(System.currentTimeMillis()) + "] Appointment canceled for patient #" + patient_id + " of Appointment ID #" + appointment_id  + "\n");
                     log_file_writer.close();
                     //admin file writer
                     FileWriter admin_log_file_writer = new FileWriter("D:\\web_services\\montreal_server\\logs\\admin_log.txt");
-                    admin_log_file_writer.write("[" + new Timestamp(System.currentTimeMillis()) + "] Appointment canceled for patient #" + patient_id + " of "+ type +" Appointment ID #" + appointment_id  + "\n");
+                    admin_log_file_writer.write("[" + new Timestamp(System.currentTimeMillis()) + "] Appointment canceled for patient #" + patient_id + " of Appointment ID #" + appointment_id  + "\n");
                     admin_log_file_writer.close();
                 } else {
                     //client file writer
                     BufferedWriter log_file_buffered_writer = new BufferedWriter(new FileWriter("D:\\web_services\\montreal_server\\logs\\"+ patient_id +".txt", true));
-                    log_file_buffered_writer.write("[" + new Timestamp(System.currentTimeMillis()) + "] Appointment canceled for patient #" + patient_id + " of "+ type +" Appointment ID #" + appointment_id  + "\n");
+                    log_file_buffered_writer.write("[" + new Timestamp(System.currentTimeMillis()) + "] Appointment canceled for patient #" + patient_id + " of Appointment ID #" + appointment_id  + "\n");
                     log_file_buffered_writer.close();
                     //admin file writer
                     BufferedWriter admin_log_file_buffered_writer = new BufferedWriter(new FileWriter("D:\\web_services\\montreal_server\\logs\\admin_log.txt", true));
-                    admin_log_file_buffered_writer.write("[" + new Timestamp(System.currentTimeMillis()) + "] Appointment canceled for patient #" + patient_id + " of "+ type +" Appointment ID #" + appointment_id  + "\n");
+                    admin_log_file_buffered_writer.write("[" + new Timestamp(System.currentTimeMillis()) + "] Appointment canceled for patient #" + patient_id + " of Appointment ID #" + appointment_id  + "\n");
                     admin_log_file_buffered_writer.close();
                 }
             } catch (IOException e) {
@@ -289,7 +289,7 @@ public class DhmsMontrealImplementation implements DhmsMontreal {
         return message;
     }
 
-    public String[] get_appointment_records(String appointment_type) {
+    public String listAppointmentAvailability(String appointment_type) {
         ServerCommunication sc = new ServerCommunication();
         
         String records_quebec_string = sc.request_appointment_records_quebec(appointment_type);
@@ -317,10 +317,10 @@ public class DhmsMontrealImplementation implements DhmsMontreal {
         	i++;
         }
         
-        return records;
+        return records.toString();
     }
     
-    public String swap_appointment(String patient_id, String old_appointment_id, String old_type, String appointment_id, String type){
+    public String swapAppointment(String patient_id, String old_appointment_id, String old_type, String appointment_id, String type){
     	String message = "";
         String location = "";
         Integer flag = 0;

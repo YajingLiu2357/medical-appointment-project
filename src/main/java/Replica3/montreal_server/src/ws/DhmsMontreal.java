@@ -8,19 +8,17 @@ import javax.jws.soap.SOAPBinding.Style;
 @SOAPBinding(style=Style.RPC)
 public interface DhmsMontreal {
 	@WebMethod
-	public String hello();
+	String addAppointment(String appointmentID, String appointmentType, int capacity);
 	@WebMethod
-	public String[] get_appointment_schedule(String patient_id);
+	String removeAppointment(String appointmentID, String appointmentType);
 	@WebMethod
-	public String add_appointment(String appointment_id, String type, String capacity);
+	String listAppointmentAvailability (String appointmentType);
 	@WebMethod
-	public String book_appointment(String patient_id, String appointment_id, String type);
+	String bookAppointment(String patientID, String appointmentID, String appointmentType);
 	@WebMethod
-	public String remove_appointment(String appointment_id, String type);
+	String getAppointmentSchedule(String patientID);
 	@WebMethod
-	public String cancel_appointment(String appointment_id, String patient_id, String type);
+	String cancelAppointment(String patientID, String appointmentID);
 	@WebMethod
-	public String[] get_appointment_records(String appointment_type);
-	@WebMethod
-	public String swap_appointment(String patient_id, String old_appointment_id, String old_type, String appointment_id, String type);
+	String swapAppointment(String patientID, String oldAppointmentID, String oldAppointmentType, String newAppointmentID, String newAppointmentType);
 }
