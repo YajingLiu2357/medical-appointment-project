@@ -1,4 +1,4 @@
-package com.example.webservice;
+package Replica1.com.example.webservice;
 
 import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 import org.omg.PortableInterceptor.SUCCESSFUL;
