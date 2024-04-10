@@ -39,62 +39,46 @@ public class ClientInterface {
     }
 
     public String[] ViewBookedAppointments() {
-        String rawRes = centralPlatform.getAppointmentSchedule(userID);
-        System.out.println("UnmarshallingAppointmentsAndType:" + rawRes);
-        String[] ret = new String[1];
-        ret[0] = rawRes;
-        return ret;
+        List<Object> processedInput = DataProcessor.getInstance().ViewBookedAppointmentsDataProcessor(userID);
+        List<String> rawResults = RequestProcessor.getInstance().ViewBookedAppointments((String) processedInput.get(0));
+        String result = ResultProcessor.getInstance().ViewBookedAppointmentsResultsProcess(rawResults);
+        String[] processedResult = DataProcessor.getInstance().ViewBookedAppointmentsResultsProcessor(result);
+        return processedResult;
     }
 
     public String AddAppointment(String city_, String time_, String date_, String month_, String year_, String type_, int capacity)
     {
-        String appointmentID = city_ + time_ + date_ + month_ + year_;
-
-        String exchangedAvailableAppointments = Type.ExchangeAppointTypeCompatibility(Type.AppointmentType.valueOf(type_));
-        String res = centralPlatform.addAppointment(appointmentID, exchangedAvailableAppointments, capacity);
-        try{
-            clientLog.WriteStr("Add Appointment Operation ID:" + appointmentID + " appointment Type:" + type_ +  " Capacity:" + capacity + "  Res:" + String.valueOf(res));
-        }
-        catch (IOException e){
-            throw new RuntimeException(e);
-        }
-        return res;
+        List<Object> processedInput = DataProcessor.getInstance().AddAppointmentDataProcessor(city_, time_, date_, month_, year_, type_, capacity);
+        List<String> rawResults = RequestProcessor.getInstance().AddAppointment((String) processedInput.get(0), (String) processedInput.get(1), (String) processedInput.get(2));
+        String result = ResultProcessor.getInstance().AddAppointmentResultsProcess(rawResults);
+        String processedResult = DataProcessor.getInstance().AddAppointmentResultProcessor(result);
+        return processedResult;
     }
 
     public String RemoveAppointment(String appointmentID, String type_) {
-        String exchangedAvailableAppointments = Type.ExchangeAppointTypeCompatibility(Type.AppointmentType.valueOf(type_));
-        String res = centralPlatform.removeAppointment(appointmentID, exchangedAvailableAppointments);
-        try{
-            clientLog.WriteStr("Remove Appointment Operation ID:" + appointmentID + " appointment Type:" + type_ +  "  Res:" + String.valueOf(res));
-        }
-        catch (IOException e){
-            throw new RuntimeException(e);
-        }
-        return res;
+        List<Object> processedInput = DataProcessor.getInstance().RemoveAppointmentDataProcessor(appointmentID, type_);
+        List<String> rawResults = RequestProcessor.getInstance().RemoveAppointment((String) processedInput.get(0), (String) processedInput.get(1));
+        String result = ResultProcessor.getInstance().RemoveAppointmentResultsProcess(rawResults);
+        String processedResult = DataProcessor.getInstance().RemoveAppointmentResultProcessor(result);
+        return processedResult;
     }
 
     public String[] ViewAvailableAppointments() {
-        String exchangedAvailableAppointments = Type.ExchangeAppointTypeCompatibility(Type.AppointmentType.PHYS);
-        String rawValiableRes = centralPlatform.listAppointmentAvailability(exchangedAvailableAppointments);
-        rawValiableRes = rawValiableRes.substring(1, rawValiableRes.length()-1);
-        String[] temp1;
-        String delimeter1 = ", ";
-        temp1 = rawValiableRes.split(delimeter1); // 分割字符串
-        for(String x :  temp1){
-            System.out.println(x);
-        }
-        System.out.println("rawValiableRes:" + rawValiableRes);
-        return temp1;
+        List<String> rawResults = RequestProcessor.getInstance().ViewAvailableAppointments();
+        String result = ResultProcessor.getInstance().ViewAvailableAppointmentsResultsProcess(rawResults);
+        String[] processedResult = DataProcessor.getInstance().ViewAvailableAppointmentsResultsProcessor(result);
+        return processedResult;
     }
 
     public String SwapAppointment(String cityType, String patientID, String oldAppointmentID, String oldAppointmentType,
                                   String newAppointmentID, String newAppointmentType)
     {
-        String oldAppType = Type.ExchangeAppointTypeCompatibility(Type.AppointmentType.valueOf(oldAppointmentType));
-        String newAppType = Type.ExchangeAppointTypeCompatibility(Type.AppointmentType.valueOf(newAppointmentType));
-        return centralPlatform.swapAppointment(patientID, oldAppointmentID, oldAppType,
-                newAppointmentID, newAppType);
+        List<Object> processedInput = DataProcessor.getInstance().SwapAppointmentsDataProcessor(cityType, patientID, oldAppointmentID, oldAppointmentType, newAppointmentID, newAppointmentType);
+        List<String> rawResults = RequestProcessor.getInstance().SwapAppointment((String) processedInput.get(0), (String) processedInput.get(1),
+                (String) processedInput.get(2), (String) processedInput.get(3),
+                (String) processedInput.get(4));
+        String result = ResultProcessor.getInstance().SwapAppointmentResultsProcess(rawResults);
+        String processedResult = DataProcessor.getInstance().SwapAppointmentResultProcessor(result);
+        return processedResult;
     }
-
-
 }

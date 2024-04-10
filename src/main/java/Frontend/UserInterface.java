@@ -103,7 +103,7 @@ public class UserInterface extends JFrame{
                 public void actionPerformed(ActionEvent e) {
                     String currentInputUserID = txtfield1.getText();
                     try {
-                        if(!ClientData.getInstance().IsValidUserName(currentInputUserID)){
+                        if(!ClientInterface.getInstance().IsValidUserName(currentInputUserID)){
                             labelInfor.setText("Error user name, please input again!");
                         }
                         else{
@@ -244,17 +244,9 @@ public class UserInterface extends JFrame{
                 public void actionPerformed(ActionEvent e) {
                     adminPanel.setVisible(false);
                     patientPanel.setVisible(false);
-                    try {
-                        String[] ret = ClientData.getInstance().ViewBookedAppointments();
-                        viewPanel.SetData(ret);
-                        viewPanel.setVisible(true);
-                    } catch (RemoteException ex) {
-                        throw new RuntimeException(ex);
-                    } catch (InterruptedException ex) {
-                        throw new RuntimeException(ex);
-                    } catch (NotBoundException ex) {
-                        throw new RuntimeException(ex);
-                    }
+                    String[] ret = ClientInterface.getInstance().ViewBookedAppointments();
+                    viewPanel.SetData(ret);
+                    viewPanel.setVisible(true);
 
                     String[] itemArray = new String[10];
                 }
@@ -283,17 +275,9 @@ public class UserInterface extends JFrame{
                 public void actionPerformed(ActionEvent e) {
                     adminPanel.setVisible(false);
                     patientPanel.setVisible(false);
-                    try {
-                        String[] ret = ClientData.getInstance().ViewAvailableAppointments();
-                        viewPanel.SetData(ret);
-                        viewPanel.setVisible(true);
-                    } catch (RemoteException ex) {
-                        throw new RuntimeException(ex);
-                    } catch (InterruptedException ex) {
-                        throw new RuntimeException(ex);
-                    } catch (NotBoundException ex) {
-                        throw new RuntimeException(ex);
-                    }
+                    String[] ret = ClientInterface.getInstance().ViewAvailableAppointments();
+                    viewPanel.SetData(ret);
+                    viewPanel.setVisible(true);
 
                     String[] itemArray = new String[10];
                 }
@@ -334,8 +318,8 @@ public class UserInterface extends JFrame{
             setLayout(new GridLayout(10, 2));
 
             JLabel label1=new JLabel("User ID:");
-            JTextField userIDtf = new JTextField(ClientData.getInstance().userID);
-            userIDtf.setText(ClientData.getInstance().userID);
+            JTextField userIDtf = new JTextField(ClientInterface.getInstance().userID);
+            userIDtf.setText(ClientInterface.getInstance().userID);
             JLabel label2=new JLabel("Choose Your City:");
             JComboBox cmb=new JComboBox();
             cmb.addItem("Choose Your City");
@@ -422,14 +406,9 @@ public class UserInterface extends JFrame{
                     String month = cmb4.getSelectedItem().toString();
                     String year = cmb5.getSelectedItem().toString();
                     String appointT = cmb6.getSelectedItem().toString();
-                    try {
-                        String res = ClientData.getInstance().BookAppointment(userID, city, time, date, month, year, appointT);
-                        labelInfor.setText(res);
-                    } catch (NotBoundException ex) {
-                        throw new RuntimeException(ex);
-                    } catch (RemoteException ex) {
-                        throw new RuntimeException(ex);
-                    }
+
+                    String res = ClientInterface.getInstance().BookAppointment(userID, city, time, date, month, year, appointT);
+                    labelInfor.setText(res);
                 }
             });
             JButton btnBack = new JButton("Back");
@@ -486,7 +465,7 @@ public class UserInterface extends JFrame{
             cmb0.addItem("MTL");
             cmb0.addItem("QUE");
             cmb0.addItem("SHE");
-            userTxtfield.setText(ClientData.getInstance().userID);
+            userTxtfield.setText(ClientInterface.getInstance().userID);
             JLabel label2=new JLabel("Old Appointment ID:");
             JTextField txtfield1=new JTextField();
             JLabel label3 = new JLabel("Old Appointment Type:");
@@ -512,14 +491,9 @@ public class UserInterface extends JFrame{
                     String oldAppointmentType = cmb2.getSelectedItem().toString();
                     String newAppointmentID = txtfield3.getText();
                     String newAppointmentType = cmb4.getSelectedItem().toString();
-                    try {
-                        String res = ClientData.getInstance().SwapAppointment(cityType, userID, oldAppointmentID, oldAppointmentType, newAppointmentID, newAppointmentType);
-                        labelInfor.setText(res);
-                    } catch (NotBoundException ex) {
-                        throw new RuntimeException(ex);
-                    } catch (RemoteException ex) {
-                        throw new RuntimeException(ex);
-                    }
+
+                    String res = ClientInterface.getInstance().SwapAppointment(cityType, userID, oldAppointmentID, oldAppointmentType, newAppointmentID, newAppointmentType);
+                    labelInfor.setText(res);
                 }
             });
             JButton btnBack = new JButton("Back");
@@ -567,7 +541,7 @@ public class UserInterface extends JFrame{
             setLayout(new GridLayout(10, 2));
             JLabel label1=new JLabel("Input User ID:");
             JTextField userTxtfield=new JTextField();
-            userTxtfield.setText(ClientData.getInstance().userID);
+            userTxtfield.setText(ClientInterface.getInstance().userID);
             JLabel label2=new JLabel("Input Appointment ID:");
             JTextField txtfield1=new JTextField();
 
@@ -576,14 +550,8 @@ public class UserInterface extends JFrame{
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     String appointmentID = txtfield1.getText();
-                    try {
-                        String res = ClientData.getInstance().CancelAppointment(appointmentID);
-                        labelInfor.setText(res);
-                    } catch (NotBoundException ex) {
-                        throw new RuntimeException(ex);
-                    } catch (RemoteException ex) {
-                        throw new RuntimeException(ex);
-                    }
+                    String res = ClientInterface.getInstance().CancelAppointment(appointmentID);
+                    labelInfor.setText(res);
                 }
             });
             JButton btnBack = new JButton("Back");
@@ -711,14 +679,9 @@ public class UserInterface extends JFrame{
                     String year = cmb5.getSelectedItem().toString();
                     String appointT = cmb6.getSelectedItem().toString();
                     int capacity = Integer.parseInt(textCapacity.getText());
-                    try {
-                        String res = ClientData.getInstance().AddAppointment(city, time, date, month, year, appointT, capacity);
-                        labelInfor.setText(res);
-                    } catch (NotBoundException ex) {
-                        throw new RuntimeException(ex);
-                    } catch (RemoteException ex) {
-                        throw new RuntimeException(ex);
-                    }
+
+                    String res = ClientInterface.getInstance().AddAppointment(city, time, date, month, year, appointT, capacity);
+                    labelInfor.setText(res);
                 }
             });
             JButton btnBack = new JButton("Back");
@@ -782,14 +745,8 @@ public class UserInterface extends JFrame{
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     String appointmentID = txtfield1.getText();
-                    try {
-                        String res = ClientData.getInstance().RemoveAppointment(appointmentID, Objects.requireNonNull(cmb6.getSelectedItem()).toString());
-                        labelInfor.setText(res);
-                    } catch (NotBoundException ex) {
-                        throw new RuntimeException(ex);
-                    } catch (RemoteException ex) {
-                        throw new RuntimeException(ex);
-                    }
+                    String res = ClientInterface.getInstance().RemoveAppointment(appointmentID, Objects.requireNonNull(cmb6.getSelectedItem()).toString());
+                    labelInfor.setText(res);
                 }
             });
             JButton btnBack = new JButton("Back");

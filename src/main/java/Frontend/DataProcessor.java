@@ -50,6 +50,13 @@ public class DataProcessor {
         return processedInput;
     }
 
+    public String[] ViewBookedAppointmentsResultsProcessor(String rawInfor)
+    {
+        //todo: process the results
+        String[] res = {rawInfor};
+        return res;
+    }
+
     public List<Object> AddAppointmentDataProcessor(String city_, String time_, String date_,
                                                     String month_, String year_, String type_, int capacity)
     {
@@ -63,6 +70,11 @@ public class DataProcessor {
         return processedInput;
     }
 
+    public String AddAppointmentResultProcessor(String rawInfo){
+        //todo: process the result
+        return rawInfo;
+    }
+
     public List<Object> RemoveAppointmentDataProcessor(String appointmentID, String type_)
     {
         List<Object> processedInput = new ArrayList<>();
@@ -72,15 +84,25 @@ public class DataProcessor {
         return processedInput;
     }
 
+    public String RemoveAppointmentResultProcessor(String rawInfo){
+        //todo: process the result
+        return rawInfo;
+    }
+
     public List<Object> ViewAvailableAppointmentsDataProcessor()
     {
         List<Object> processedInput = new ArrayList<>();
         return processedInput;
     }
 
+    public String[] ViewAvailableAppointmentsResultsProcessor(String rawInfor)
+    {
+        //todo: process the results
+        String[] res = {rawInfor};
+        return res;
+    }
 
-
-    public List<Object> ViewAvailableAppointmentsDataProcessor(String cityType,
+    public List<Object> SwapAppointmentsDataProcessor(String cityType,
                                                                String patientID,
                                                                String oldAppointmentID,
                                                                String oldAppointmentType,
@@ -98,5 +120,10 @@ public class DataProcessor {
         processedInput.add(newAppType);
 
         return processedInput;
+    }
+
+    public String SwapAppointmentResultProcessor(String rawInfo){
+        //todo: process the result
+        return rawInfo;
     }
 }
