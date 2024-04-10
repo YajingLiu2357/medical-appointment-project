@@ -10,6 +10,10 @@ import javax.jws.soap.SOAPBinding.Style;
 public interface Hospital {
     String sayHello(String name);
 
+    @WebMethod
+    void Reset();
+
+
     //compatibility interface
     @WebMethod
     String addAppointment(String appointmentID, String appointmentType, int capacity);

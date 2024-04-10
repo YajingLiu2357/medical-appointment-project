@@ -39,6 +39,13 @@ public class HospitalServer {
 
     private ConcurrentHashMap<Type.CityType, Hospital> cityHospitalInterface = new ConcurrentHashMap<>();
 
+    public void Reset() {
+        serverData.clear();
+        bookingRecord.clear();
+        userIndex.set(0);
+        registedUser.clear();
+    }
+
     private boolean isInitializeServerConnection = false;
 
     //to make sure the correctness of concurrency

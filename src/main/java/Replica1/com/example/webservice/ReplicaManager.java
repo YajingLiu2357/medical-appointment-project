@@ -15,21 +15,11 @@ public class ReplicaManager {
     static int replicaNo = 1;
     static InetAddress ip;
     public static void main(String[] args) throws SocketException {
-        // Create and initialize the actively replicated server subsystem
-        Endpoint endpointCenter = null;
-        Endpoint endpointMTL = null;
-        Endpoint endpointQUE = null;
-        Endpoint endpointSHE = null;
-        try {
+        try{
             ip = InetAddress.getLocalHost();
-            endpointMTL = Endpoint.publish("http://" + ip.getHostAddress() + ":8081/MTL", new HospitalImpl());
-            endpointQUE = Endpoint.publish("http://" + ip.getHostAddress() + ":8082/QUE", new HospitalImpl());
-            endpointSHE = Endpoint.publish("http://" + ip.getHostAddress() + ":8083/SHE", new HospitalImpl());
-            endpointCenter = Endpoint.publish("http://" + ip.getHostAddress() + ":8080/center", new CenterImpl());
             System.out.println("Replica1 services are published at " + ip.getHostAddress());
-        } catch (Exception e) {
+        }catch (Exception e) {
         }
-        // Check the software failure
         DatagramSocket socket = new DatagramSocket(5010);
         System.out.println("Replica1 manager is running at port" + socket.getLocalPort());
         try{
@@ -50,39 +40,18 @@ public class ReplicaManager {
                     if (errorType == "Software failure"){
                         ip = InetAddress.getLocalHost();
                         CenterImpl center = new CenterImpl();
-//                        HospitalImpl mtl = new HospitalImpl();
-//                        HospitalImpl que = new HospitalImpl();
-//                        HospitalImpl she = new HospitalImpl();
-                        endpointCenter.stop();
-                        endpointMTL.stop();
-                        endpointQUE.stop();
-                        endpointSHE.stop();
-                        Endpoint endpointMTLNew = Endpoint.publish("http://" + ip.getHostAddress() + ":8081/MTL", new HospitalImpl());
-                        Endpoint endpointQUENew = Endpoint.publish("http://" + ip.getHostAddress() + ":8082/QUE", new HospitalImpl());
-                        Endpoint endpointSHENew = Endpoint.publish("http://" + ip.getHostAddress() + ":8083/SHE", new HospitalImpl());
-                        Endpoint endpointCenterNew = Endpoint.publish("http://" + ip.getHostAddress() + ":8080/center", center);
                         System.out.println("Replica1 starts recovery." );
-//                        mtl.recoverFromLog("Montreal");
-//                        que.recoverFromLog("Quebec");
-//                        she.recoverFromLog("Sherbrooke");
-                        center.recoverFromLog("Montreal");
-                        center.recoverFromLog("Quebec");
-                        center.recoverFromLog("Sherbrooke");
+                        center.recoverFromLog("MTL");
+                        center.recoverFromLog("QUE");
+                        center.recoverFromLog("SHE");
                         System.out.println("Replica1 finishes recovery." );
                     } else if (errorType == "Process crash"){
-                        ip = InetAddress.getLocalHost();
+                        try{
+                            ip = InetAddress.getLocalHost();
+                            System.out.println("Replica1 services are published at " + ip.getHostAddress());
+                        }catch (Exception e) {
+                        }
                         CenterImpl center = new CenterImpl();
-//                        HospitalImpl mtl = new HospitalImpl();
-//                        HospitalImpl que = new HospitalImpl();
-//                        HospitalImpl she = new HospitalImpl();
-                        endpointCenter.stop();
-                        endpointMTL.stop();
-                        endpointQUE.stop();
-                        endpointSHE.stop();
-                        Endpoint endpointMTLNew = Endpoint.publish("http://" + ip.getHostAddress() + ":8081/MTL", new HospitalImpl());
-                        Endpoint endpointQUENew = Endpoint.publish("http://" + ip.getHostAddress() + ":8082/QUE", new HospitalImpl());
-                        Endpoint endpointSHENew = Endpoint.publish("http://" + ip.getHostAddress() + ":8083/SHE", new HospitalImpl());
-                        Endpoint endpointCenterNew = Endpoint.publish("http://" + ip.getHostAddress() + ":8080/center", center);
                         Thread webServicesThread = new Thread(() -> {
                             String[] arguments = new String[] {"123"};
                             ServerHospitalMTL.main(arguments);
@@ -100,17 +69,13 @@ public class ReplicaManager {
                         webServicesThread3.start();
                         Thread webServicesThread4 = new Thread(() -> {
                             String[] arguments = new String[] {"123"};
-                            // TODO: do we need to run ServerCenterCorba.main(arguments) here?
-//                            ServerCenterCorba.main(arguments);
+                            ServerCenterCorba.main(arguments);
                         });
                         webServicesThread4.start();
                         System.out.println("Replica1 starts recovery." );
-                        center.recoverFromLog("Montreal");
-                        center.recoverFromLog("Quebec");
-                        center.recoverFromLog("Sherbrooke");
-//                        mtl.recoverFromLog("Montreal");
-//                        que.recoverFromLog("Quebec");
-//                        she.recoverFromLog("Sherbrooke");
+                        center.recoverFromLog("MTL");
+                        center.recoverFromLog("QUE");
+                        center.recoverFromLog("SHE");
                         System.out.println("Replica1 finishes recovery." );
                     }
                 }

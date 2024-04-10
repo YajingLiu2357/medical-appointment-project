@@ -9,13 +9,13 @@ public class ServerHospitalMTL {
     public static void main(String args[]){
         HospitalServer.cityType = Type.CityType.MTL;
 
-        LogSystem.getInstance().Initiate("Montreal.txt");
+        LogSystem.getInstance().Initiate("MTL.txt");
         // Start web services server in one thread
-//        Thread webServicesThread = new Thread(() -> {
-//            Endpoint endpoint = Endpoint.publish("http://localhost:8081/MTL", new HospitalImpl());
-//            System.out.println("Hello service is published: " + endpoint.isPublished());
-//        });
-//        webServicesThread.start();
+        Thread webServicesThread = new Thread(() -> {
+            Endpoint endpoint = Endpoint.publish("http://localhost:8081/MTL", new HospitalImpl());
+            System.out.println("Hello service is published: " + endpoint.isPublished());
+        });
+        webServicesThread.start();
 
         // Start UDP server in another thread
         Thread udpThread = new Thread(() -> {

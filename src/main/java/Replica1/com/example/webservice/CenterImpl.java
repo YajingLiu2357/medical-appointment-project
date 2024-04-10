@@ -20,6 +20,15 @@ public class CenterImpl implements Center {
         return "Hello, " + name + "!";
     }
 
+    @Override
+    public void Reset(Type.CityType city) {
+        try{
+            CentralServer.getInstance().GetCityOpr(city).Reset();
+        } catch (NotBoundException | RemoteException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     //compatibility interface: return the constants results to the front end
     @Override
     public String addAppointment(String appointmentID, String appointmentType, int capacity) {
@@ -108,6 +117,7 @@ public class CenterImpl implements Center {
     public void recoverFromLog(String city){
         String filePath = Constants.LOG_FILE_PATH  + city + ".txt";
         try {
+            Reset(Type.CityType.valueOf(city));
             // Recover from log
             FileReader fileReader = new FileReader(filePath);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
