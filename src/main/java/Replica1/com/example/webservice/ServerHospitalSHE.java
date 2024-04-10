@@ -10,11 +10,11 @@ public class ServerHospitalSHE {
         HospitalServer.cityType = Type.CityType.SHE;
         LogSystem.getInstance().Initiate("Sherbrooke.txt");
         // Start web services server in one thread
-        Thread webServicesThread = new Thread(() -> {
-            Endpoint endpoint = Endpoint.publish("http://localhost:8083/SHE", new HospitalImpl());
-            System.out.println("Hello service is published: " + endpoint.isPublished());
-        });
-        webServicesThread.start();
+//        Thread webServicesThread = new Thread(() -> {
+//            Endpoint endpoint = Endpoint.publish("http://localhost:8083/SHE", new HospitalImpl());
+//            System.out.println("Hello service is published: " + endpoint.isPublished());
+//        });
+//        webServicesThread.start();
 
         // Start UDP server in another thread
         Thread udpThread = new Thread(() -> {

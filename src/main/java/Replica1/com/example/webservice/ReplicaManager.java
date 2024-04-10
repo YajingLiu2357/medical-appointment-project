@@ -22,10 +22,10 @@ public class ReplicaManager {
         Endpoint endpointSHE = null;
         try {
             ip = InetAddress.getLocalHost();
-            endpointCenter = Endpoint.publish("http://" + ip.getHostAddress() + ":8080/center", new CenterImpl());
             endpointMTL = Endpoint.publish("http://" + ip.getHostAddress() + ":8081/MTL", new HospitalImpl());
             endpointQUE = Endpoint.publish("http://" + ip.getHostAddress() + ":8082/QUE", new HospitalImpl());
             endpointSHE = Endpoint.publish("http://" + ip.getHostAddress() + ":8083/SHE", new HospitalImpl());
+            endpointCenter = Endpoint.publish("http://" + ip.getHostAddress() + ":8080/center", new CenterImpl());
             System.out.println("Replica1 services are published at " + ip.getHostAddress());
         } catch (Exception e) {
         }
@@ -47,23 +47,72 @@ public class ReplicaManager {
                 DatagramPacket replyPacketBook = new DatagramPacket(reply.getBytes(), reply.length(), address, port);
                 socket.send(replyPacketBook);
                 if (replicaErrorNo == replicaNo){
-                    ip = InetAddress.getLocalHost();
-                    HospitalImpl mtl = new HospitalImpl();
-                    HospitalImpl que = new HospitalImpl();
-                    HospitalImpl she = new HospitalImpl();
-                    endpointCenter.stop();
-                    endpointMTL.stop();
-                    endpointQUE.stop();
-                    endpointSHE.stop();
-                    Endpoint endpointCenterNew = Endpoint.publish("http://" + ip.getHostAddress() + ":8080/center", new CenterImpl());
-                    Endpoint endpointMTLNew = Endpoint.publish("http://" + ip.getHostAddress() + ":8081/MTL", mtl);
-                    Endpoint endpointQUENew = Endpoint.publish("http://" + ip.getHostAddress() + ":8082/QUE", que);
-                    Endpoint endpointSHENew = Endpoint.publish("http://" + ip.getHostAddress() + ":8083/SHE", she);
-                    System.out.println("Replica2 recovers services." );
-                    mtl.recoverFromLog("Montreal");
-                    que.recoverFromLog("Quebec");
-                    she.recoverFromLog("Sherbrooke");
-                    System.out.println("Replica2 finishes recovery." );
+                    if (errorType == "Software failure"){
+                        ip = InetAddress.getLocalHost();
+                        CenterImpl center = new CenterImpl();
+//                        HospitalImpl mtl = new HospitalImpl();
+//                        HospitalImpl que = new HospitalImpl();
+//                        HospitalImpl she = new HospitalImpl();
+                        endpointCenter.stop();
+                        endpointMTL.stop();
+                        endpointQUE.stop();
+                        endpointSHE.stop();
+                        Endpoint endpointMTLNew = Endpoint.publish("http://" + ip.getHostAddress() + ":8081/MTL", new HospitalImpl());
+                        Endpoint endpointQUENew = Endpoint.publish("http://" + ip.getHostAddress() + ":8082/QUE", new HospitalImpl());
+                        Endpoint endpointSHENew = Endpoint.publish("http://" + ip.getHostAddress() + ":8083/SHE", new HospitalImpl());
+                        Endpoint endpointCenterNew = Endpoint.publish("http://" + ip.getHostAddress() + ":8080/center", center);
+                        System.out.println("Replica1 starts recovery." );
+//                        mtl.recoverFromLog("Montreal");
+//                        que.recoverFromLog("Quebec");
+//                        she.recoverFromLog("Sherbrooke");
+                        center.recoverFromLog("Montreal");
+                        center.recoverFromLog("Quebec");
+                        center.recoverFromLog("Sherbrooke");
+                        System.out.println("Replica1 finishes recovery." );
+                    } else if (errorType == "Process crash"){
+                        ip = InetAddress.getLocalHost();
+                        CenterImpl center = new CenterImpl();
+//                        HospitalImpl mtl = new HospitalImpl();
+//                        HospitalImpl que = new HospitalImpl();
+//                        HospitalImpl she = new HospitalImpl();
+                        endpointCenter.stop();
+                        endpointMTL.stop();
+                        endpointQUE.stop();
+                        endpointSHE.stop();
+                        Endpoint endpointMTLNew = Endpoint.publish("http://" + ip.getHostAddress() + ":8081/MTL", new HospitalImpl());
+                        Endpoint endpointQUENew = Endpoint.publish("http://" + ip.getHostAddress() + ":8082/QUE", new HospitalImpl());
+                        Endpoint endpointSHENew = Endpoint.publish("http://" + ip.getHostAddress() + ":8083/SHE", new HospitalImpl());
+                        Endpoint endpointCenterNew = Endpoint.publish("http://" + ip.getHostAddress() + ":8080/center", center);
+                        Thread webServicesThread = new Thread(() -> {
+                            String[] arguments = new String[] {"123"};
+                            ServerHospitalMTL.main(arguments);
+                        });
+                        webServicesThread.start();
+                        Thread webServicesThread2 = new Thread(() -> {
+                            String[] arguments = new String[] {"123"};
+                            ServerHospitalQUE.main(arguments);
+                        });
+                        webServicesThread2.start();
+                        Thread webServicesThread3 = new Thread(() -> {
+                            String[] arguments = new String[] {"123"};
+                            ServerHospitalSHE.main(arguments);
+                        });
+                        webServicesThread3.start();
+                        Thread webServicesThread4 = new Thread(() -> {
+                            String[] arguments = new String[] {"123"};
+                            // TODO: do we need to run ServerCenterCorba.main(arguments) here?
+//                            ServerCenterCorba.main(arguments);
+                        });
+                        webServicesThread4.start();
+                        System.out.println("Replica1 starts recovery." );
+                        center.recoverFromLog("Montreal");
+                        center.recoverFromLog("Quebec");
+                        center.recoverFromLog("Sherbrooke");
+//                        mtl.recoverFromLog("Montreal");
+//                        que.recoverFromLog("Quebec");
+//                        she.recoverFromLog("Sherbrooke");
+                        System.out.println("Replica1 finishes recovery." );
+                    }
                 }
             }
         } catch(IOException e){
