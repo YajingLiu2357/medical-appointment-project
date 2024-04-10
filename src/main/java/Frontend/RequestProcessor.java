@@ -1,6 +1,9 @@
 package com.example.webservice;
 
 import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
 import java.net.URL;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -10,10 +13,9 @@ import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 
 public class RequestProcessor {
-
-    public Center replica1Connection;
-
-    //todo:add the other replicas
+    //sequencer port number
+    int sequencerPort = 0;
+    String sequencerLink = "127.0.0.1";
 
     private static RequestProcessor instance = null;
 
@@ -24,94 +26,75 @@ public class RequestProcessor {
         return instance;
     }
 
-    private RequestProcessor() {
-        try {
-            URL url = new URL("http://localhost:8080/center?wsdl");
-            QName qName = new QName("http://webservice.example.com/", "Replica2");
-            Service service = Service.create(url, qName);
-            replica1Connection = service.getPort(Center.class);
-        }
-        catch (Exception e) {
-            System.out.println("Client exception: " + e);
-            e.printStackTrace();
+    //udp operation
+    private String OperationUDP(String methodInfo, String parameterInfo) {
+        try{
+            DatagramSocket aSocket = new DatagramSocket();
+            //marshalling process: bookAppointment:userID,appointmentID,appointmentType
+            String m = methodInfo + ":" + parameterInfo;
+            InetAddress aHost = InetAddress.getByName(sequencerLink);
+            int serverPort = sequencerPort;
+            DatagramPacket request =
+                    new DatagramPacket(m.getBytes(),  m.length(), aHost, serverPort);
+            aSocket.send(request);
+
+            //the reply of the sequencer
+            byte[] buffer = new byte[1000];
+            DatagramPacket reply = new DatagramPacket(buffer, buffer.length);
+            aSocket.receive(reply);
+            String responseStr = new String(reply.getData());
+
+            return responseStr;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    public List<Boolean> IsValidUserName(String userID) {
-        Type.UserEntity userEntity1 = new Type.UserEntity();
-        userEntity1.DeserializeUser(userID);
-        List<Boolean> results = new ArrayList<>();
-        boolean res_replica1 = replica1Connection.CheckUser((short)userEntity1.city.ordinal(), userID);
-        //todo: replica2, replica3, replica4
-        results.add(res_replica1);
-        return results;
+    private List<String> SeperateReplicaReply(String reply){
+        //todo: seperate the reply string into the four results from four replicas
+        List<String> res = new ArrayList<>();
+        res.add(reply);
+        return res;
+    }
+
+    public List<String> IsValidUserName(String userID) {
+        String results = OperationUDP("IsValidUserName", userID);
+        return SeperateReplicaReply(results);
     }
 
     public List<String> BookAppointment(String userid_, String appointmentID, String exchangedAvailableAppointments) {
-        List<String> results = new ArrayList<>();
-        String res_replica1 = replica1Connection.bookAppointment(userid_, appointmentID, exchangedAvailableAppointments);
-        //todo: replica2, replica3, replica4
-        results.add(res_replica1);
-        return results;
+        String results = OperationUDP("BookAppointment", userid_+"," + appointmentID+","+exchangedAvailableAppointments);
+        return SeperateReplicaReply(results);
     }
 
     public List<String> CancelAppointment(String userID, String appointmentID) {
-
-        List<String> results = new ArrayList<>();
-        String res_replica1 = replica1Connection.cancelAppointment(userID, appointmentID);
-        results.add(res_replica1);
-        //todo: replica2, replica3, replica4
-
-        return results;
+        String results = OperationUDP("CancelAppointment", userID+"," + appointmentID);
+        return SeperateReplicaReply(results);
     }
 
     public List<String> ViewBookedAppointments(String userID) {
-        List<String> results = new ArrayList<>();
-        String rawRes = replica1Connection.getAppointmentSchedule(userID);
-        results.add(rawRes);
-        //todo: replica2, replica3, replica4
-        return results;
+        String results = OperationUDP("ViewBookedAppointments", userID);
+        return SeperateReplicaReply(results);
     }
 
-    public List<String> AddAppointment(String city_, String time_, String date_, String month_, String year_, String type_, int capacity) throws RemoteException, NotBoundException {
-        List<String> results = new ArrayList<>();
-        String appointmentID = city_ + time_ + date_ + month_ + year_;
-        String exchangedAvailableAppointments = Type.ExchangeAppointTypeCompatibility(Type.AppointmentType.valueOf(type_));
-        String res_replica1 = replica1Connection.addAppointment(appointmentID, exchangedAvailableAppointments, capacity);
-        results.add(res_replica1);
-        //todo: replica2, replica3, replica4
-
-        return results;
+    public List<String> AddAppointment(String appointmentID, String exchangedAvailableAppointments, String capacity) {
+        String results = OperationUDP("AddAppointment", appointmentID+"," + exchangedAvailableAppointments + "," + capacity);
+        return SeperateReplicaReply(results);
     }
 
-    public List<String> RemoveAppointment(String appointmentID, String exchangedAvailableAppointments) throws RemoteException, NotBoundException {
-        List<String> results = new ArrayList<>();
-        String res_replica1 = replica1Connection.removeAppointment(appointmentID, exchangedAvailableAppointments);
-        results.add(res_replica1);
-        //todo: replica2, replica3, replica4
-        return results;
+    public List<String> RemoveAppointment(String appointmentID, String exchangedAvailableAppointments){
+        String results = OperationUDP("RemoveAppointment", appointmentID+"," + exchangedAvailableAppointments);
+        return SeperateReplicaReply(results);
     }
 
     public List<String> ViewAvailableAppointments() {
-        List<String> results = new ArrayList<>();
-        String exchangedAvailableAppointments = Type.ExchangeAppointTypeCompatibility(Type.AppointmentType.PHYS);
-        String rawValiableRes = replica1Connection.listAppointmentAvailability(exchangedAvailableAppointments);
-        rawValiableRes = rawValiableRes.substring(1, rawValiableRes.length()-1);
-        results.add(rawValiableRes);
-        //todo: replica2, replica3, replica4
-
-        return results;
+        String results = OperationUDP("ViewAvailableAppointments", "");
+        return SeperateReplicaReply(results);
     }
 
     public List<String> SwapAppointment(String patientID, String oldAppointmentID, String oldAppType, String newAppointmentID, String newAppType)
     {
-        List<String> results = new ArrayList<>();
-        String res_replica1 = replica1Connection.swapAppointment(patientID,
-                oldAppointmentID, oldAppType,
-                newAppointmentID, newAppType);
-        results.add(res_replica1);
-        //todo: replica2, replica3, replica4
-
-        return results;
+        String results = OperationUDP("SwapAppointment", patientID+","+oldAppointmentID+","+oldAppType+","+newAppointmentID+","+newAppType);
+        return SeperateReplicaReply(results);
     }
 }
