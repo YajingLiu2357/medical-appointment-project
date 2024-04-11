@@ -604,10 +604,17 @@ public class ServerSHE implements ServerWS {
                 String bookCancel = bookData[0];
                 String patientID = bookData[1];
                 String appointmentID = bookData[2];
-                URL url = new URL("http://localhost:8080/appointment/she?wsdl");
-                QName qname = new QName("http://dhms.service.com/", "SherbrookeServerService");
-                Service service = Service.create(url, qname);
-                ServerWS she = service.getPort(ServerWS.class);
+                ServerWS she = null;
+                try{
+                    String ip = InetAddress.getLocalHost().getHostAddress();
+                    URL urlSHE = new URL("http://"+ip+":8080/appointment/she?wsdl");
+                    QName qnameSHE = new QName("http://main.Replica4/", "ServerSHEService");
+                    Service serviceSHE = Service.create(urlSHE, qnameSHE);
+                    QName qnameSHE2 = new QName("http://main.Replica4/", "ServerSHEPort");
+                    she = serviceSHE.getPort(qnameSHE2, ServerWS.class);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
                 if (bookCancel.equals(Constants.BOOK)){
                     String appointmentType = bookData[3];
                     String log = she.bookAppointment(patientID, appointmentID, appointmentType);

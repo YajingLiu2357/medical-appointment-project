@@ -13,6 +13,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
+import Replica3.webService.HospitalWS;
 import Replica4.entities.Constants;
 import Replica4.replies.ReplyAppointment;
 import Replica4.replies.ReplyRecord;
@@ -606,10 +607,17 @@ public class ServerMTL implements ServerWS {
                 String bookCancel = bookData[0];
                 String patientID = bookData[1];
                 String appointmentID = bookData[2];
-                URL url = new URL("http://localhost:8080/appointment/mtl?wsdl");
-                QName qname = new QName("http://dhms.service.com/", "MontrealServerService");
-                Service service = Service.create(url, qname);
-                ServerWS mtl = service.getPort(ServerWS.class);
+                ServerWS mtl = null;
+                try{
+                    String ip = InetAddress.getLocalHost().getHostAddress();
+                    URL urlMTL = new URL("http://"+ip+":8080/appointment/mtl?wsdl");
+                    QName qnameMTL = new QName("http://main.Replica4/", "ServerMTLService");
+                    Service serviceMTL = Service.create(urlMTL, qnameMTL);
+                    QName qnameMTL2 = new QName("http://main.Replica4/", "ServerMTLPort");
+                    mtl = serviceMTL.getPort(qnameMTL2, ServerWS.class);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
                 if (bookCancel.equals(Constants.BOOK)){
                     String appointmentType = bookData[3];
                     String log = mtl.bookAppointment(patientID, appointmentID, appointmentType);
