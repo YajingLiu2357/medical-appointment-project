@@ -9,7 +9,7 @@ public class ServerHospitalQUE {
     public static void main(String args[]){
 
         HospitalServer.cityType = Type.CityType.QUE;
-        LogSystem.getInstance().Initiate("Quebec.txt");
+        LogSystem.getInstance().Initiate("QUE.txt");
         // Start web services server in one thread
         Thread webServicesThread = new Thread(() -> {
             Endpoint endpoint = Endpoint.publish("http://localhost:8082/QUE", new HospitalImpl());

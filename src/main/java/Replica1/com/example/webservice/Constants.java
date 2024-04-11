@@ -19,7 +19,7 @@ public final class Constants {
     public static final String NO_CAPACITY = "fail because appointment does not exist or no capacity";
 
     public static final String LOG_FILE_PATH = "./src/main/java/Replica1/com/example/webservice/log/";
-    public static final String MONTREAL_TXT = "Montreal.txt";
-    public static final String QUEBEC_TXT = "Quebec.txt";
-    public static final String SHERBROOKE_TXT = "Sherbrooke.txt";
+    public static final String MONTREAL_TXT = "MTL.txt";
+    public static final String QUEBEC_TXT = "QUE.txt";
+    public static final String SHERBROOKE_TXT = "SHE.txt";
 }

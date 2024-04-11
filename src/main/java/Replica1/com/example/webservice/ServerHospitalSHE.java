@@ -8,7 +8,7 @@ public class ServerHospitalSHE {
     public static void main(String args[]){
 
         HospitalServer.cityType = Type.CityType.SHE;
-        LogSystem.getInstance().Initiate("Sherbrooke.txt");
+        LogSystem.getInstance().Initiate("SHE.txt");
         // Start web services server in one thread
         Thread webServicesThread = new Thread(() -> {
             Endpoint endpoint = Endpoint.publish("http://localhost:8083/SHE", new HospitalImpl());
