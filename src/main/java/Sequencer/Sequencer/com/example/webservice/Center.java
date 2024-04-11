@@ -1,4 +1,5 @@
-package Sequencer;
+package com.example.webservice;
+
 
 import javax.jws.WebMethod;
 import javax.jws.WebService;

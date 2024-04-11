@@ -14,7 +14,7 @@ import javax.xml.ws.Service;
 
 public class RequestProcessor {
     //sequencer port number
-    int sequencerPort = 0;
+    int sequencerPort = 8000;
     String sequencerLink = "127.0.0.1";
 
     private static RequestProcessor instance = null;
@@ -43,27 +43,34 @@ public class RequestProcessor {
             DatagramPacket reply = new DatagramPacket(buffer, buffer.length);
             aSocket.receive(reply);
             String responseStr = new String(reply.getData());
+            System.out.println("responseStr:" + responseStr.trim());
 
-            return responseStr;
+            return responseStr.trim();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
     private List<String> SeperateReplicaReply(String reply){
-        //todo: seperate the reply string into the four results from four replicas
         List<String> res = new ArrayList<>();
-        res.add(reply);
+        String[] results = reply.split(":");
+        for(int i =0; i < results.length; ++i){
+            res.add(results[i]);
+        }
         return res;
     }
 
     public List<String> RegisterUser(String cityValue, String userType) {
-        String results = OperationUDP("RegisterUser", cityValue + "," + userType);
+        short cityIndex = (short)Type.CityType.valueOf(cityValue).ordinal();
+        short userIndex = (short)Type.UserType.valueOf(userType).ordinal();
+        String results = OperationUDP("RegisterUser", cityIndex + "," + userIndex);
         return SeperateReplicaReply(results);
     }
 
     public List<String> IsValidUserName(String userID) {
-        String results = OperationUDP("IsValidUserName", userID);
+        Type.UserEntity userEntity1 = new Type.UserEntity();
+        userEntity1.DeserializeUser(userID);
+        String results = OperationUDP("IsValidUserName", userEntity1.city.ordinal() + "," + userID);
         return SeperateReplicaReply(results);
     }
 

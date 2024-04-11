@@ -26,6 +26,8 @@ public class DataProcessor {
     }
 
     public String BookAppointmentResultsProcess(String rawInfor){
+        String[] bookingResults = rawInfor.split("$");
+
         //todo: process the error information
         return rawInfor;
     }
