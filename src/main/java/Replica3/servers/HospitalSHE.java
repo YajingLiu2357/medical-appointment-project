@@ -603,10 +603,17 @@ public class HospitalSHE implements HospitalWS {
                 String bookCancel = bookData[0];
                 String patientID = bookData[1];
                 String appointmentID = bookData[2];
-                URL url = new URL("http://localhost:8080/appointment/she?wsdl");
-                QName qname = new QName("http://dhms.service.com/", "SherbrookeServerService");
-                Service service = Service.create(url, qname);
-                HospitalWS she = service.getPort(HospitalWS.class);
+                HospitalWS she = null;
+                try{
+                    String ip = InetAddress.getLocalHost().getHostAddress();
+                    URL urlSHE = new URL("http://"+ip+":8080/appointment/she?wsdl");
+                    QName qnameSHE = new QName("http://servers.Replica3/", "HospitalSHEService");
+                    Service serviceSHE = Service.create(urlSHE, qnameSHE);
+                    QName qnameSHE2 = new QName("http://servers.Replica3/", "HospitalSHEPort");
+                    she = serviceSHE.getPort(qnameSHE2, HospitalWS.class);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
                 if (bookCancel.equals(Constants.BOOK)){
                     String appointmentType = bookData[3];
                     String log = she.bookAppointment(patientID, appointmentID, appointmentType);
