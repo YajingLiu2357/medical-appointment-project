@@ -102,27 +102,21 @@ public class UserInterface extends JFrame{
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     String currentInputUserID = txtfield1.getText();
-                    try {
-                        if(!ClientInterface.getInstance().IsValidUserName(currentInputUserID)){
-                            labelInfor.setText("Error user name, please input again!");
+                    if(!ClientInterface.getInstance().IsValidUserName(currentInputUserID)){
+                        labelInfor.setText("Error user name, please input again!");
+                    }
+                    else{
+                        ClientInterface.getInstance().Initialize(currentInputUserID);
+                        if(ClientInterface.getInstance().IsPatient()){
+                            startInterfacePanel.setVisible(!startInterfacePanel.isVisible());
+                            patientPanel.setVisible(!patientPanel.isVisible());
+                            patientPanel.labelUser.setText("User ID:" + ClientInterface.getInstance().userID);
                         }
                         else{
-                            ClientData.getInstance().Initialize(currentInputUserID);
-                            if(ClientData.getInstance().IsPatient()){
-                                startInterfacePanel.setVisible(!startInterfacePanel.isVisible());
-                                patientPanel.setVisible(!patientPanel.isVisible());
-                                patientPanel.labelUser.setText("User ID:" + ClientData.getInstance().userID);
-                            }
-                            else{
-                                startInterfacePanel.setVisible(!startInterfacePanel.isVisible());
-                                adminPanel.setVisible(!adminPanel.isVisible());
-                                adminPanel.labelUser.setText("User ID:" + ClientData.getInstance().userID);
-                            }
+                            startInterfacePanel.setVisible(!startInterfacePanel.isVisible());
+                            adminPanel.setVisible(!adminPanel.isVisible());
+                            adminPanel.labelUser.setText("User ID:" + ClientInterface.getInstance().userID);
                         }
-                    } catch (RemoteException ex) {
-                        throw new RuntimeException(ex);
-                    } catch (NotBoundException ex) {
-                        throw new RuntimeException(ex);
                     }
                 }
             });
@@ -168,21 +162,15 @@ public class UserInterface extends JFrame{
                 public void actionPerformed(ActionEvent e) {
                     String city = cmb.getSelectedItem().toString();
                     String userType = cmb2.getSelectedItem().toString();
-                    try {
-                        ClientData.getInstance().Initialize(city, userType);
-                        createUserIDInterface.setVisible(false);
-                        if(ClientData.getInstance().IsPatient()){
-                            patientPanel.setVisible(true);
-                            patientPanel.labelUser.setText(ClientData.getInstance().userID);
-                        }
-                        else{
-                            adminPanel.setVisible(true);
-                            adminPanel.labelUser.setText(ClientData.getInstance().userID);
-                        }
-                    } catch (NotBoundException ex) {
-                        throw new RuntimeException(ex);
-                    } catch (RemoteException ex) {
-                        throw new RuntimeException(ex);
+                    ClientInterface.getInstance().Initialize(city, userType);
+                    createUserIDInterface.setVisible(false);
+                    if(ClientInterface.getInstance().IsPatient()){
+                        patientPanel.setVisible(true);
+                        patientPanel.labelUser.setText(ClientInterface.getInstance().userID);
+                    }
+                    else{
+                        adminPanel.setVisible(true);
+                        adminPanel.labelUser.setText(ClientInterface.getInstance().userID);
                     }
                 }
             });
@@ -416,17 +404,11 @@ public class UserInterface extends JFrame{
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     bookPanel.setVisible(false);
-                    try {
-                        if(ClientData.getInstance().IsPatient()){
-                            patientPanel.setVisible(true);
-                        }
-                        else{
-                            adminPanel.setVisible(true);
-                        }
-                    } catch (NotBoundException ex) {
-                        throw new RuntimeException(ex);
-                    } catch (RemoteException ex) {
-                        throw new RuntimeException(ex);
+                    if(ClientInterface.getInstance().IsPatient()){
+                        patientPanel.setVisible(true);
+                    }
+                    else{
+                        adminPanel.setVisible(true);
                     }
                 }
             });
@@ -501,15 +483,11 @@ public class UserInterface extends JFrame{
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     swapPanel.setVisible(false);
-                    try {
-                        if(ClientData.getInstance().IsPatient()){
-                            patientPanel.setVisible(true);
-                        }
-                        else{
-                            adminPanel.setVisible(true);
-                        }
-                    } catch (NotBoundException | RemoteException ex) {
-                        throw new RuntimeException(ex);
+                    if(ClientInterface.getInstance().IsPatient()){
+                        patientPanel.setVisible(true);
+                    }
+                    else{
+                        adminPanel.setVisible(true);
                     }
                 }
             });
@@ -559,17 +537,11 @@ public class UserInterface extends JFrame{
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     cancelPanel.setVisible(false);
-                    try {
-                        if(ClientData.getInstance().IsPatient()){
-                            patientPanel.setVisible(true);
-                        }
-                        else{
-                            adminPanel.setVisible(true);
-                        }
-                    } catch (NotBoundException ex) {
-                        throw new RuntimeException(ex);
-                    } catch (RemoteException ex) {
-                        throw new RuntimeException(ex);
+                    if(ClientInterface.getInstance().IsPatient()){
+                        patientPanel.setVisible(true);
+                    }
+                    else{
+                        adminPanel.setVisible(true);
                     }
                 }
             });
@@ -689,17 +661,11 @@ public class UserInterface extends JFrame{
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     addPanel.setVisible(false);
-                    try {
-                        if(ClientData.getInstance().IsPatient()){
-                            patientPanel.setVisible(true);
-                        }
-                        else{
-                            adminPanel.setVisible(true);
-                        }
-                    } catch (NotBoundException ex) {
-                        throw new RuntimeException(ex);
-                    } catch (RemoteException ex) {
-                        throw new RuntimeException(ex);
+                    if(ClientInterface.getInstance().IsPatient()){
+                        patientPanel.setVisible(true);
+                    }
+                    else{
+                        adminPanel.setVisible(true);
                     }
                 }
             });
@@ -754,17 +720,11 @@ public class UserInterface extends JFrame{
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     removePanel.setVisible(false);
-                    try {
-                        if(ClientData.getInstance().IsPatient()){
-                            patientPanel.setVisible(true);
-                        }
-                        else{
-                            adminPanel.setVisible(true);
-                        }
-                    } catch (NotBoundException ex) {
-                        throw new RuntimeException(ex);
-                    } catch (RemoteException ex) {
-                        throw new RuntimeException(ex);
+                    if(ClientInterface.getInstance().IsPatient()){
+                        patientPanel.setVisible(true);
+                    }
+                    else{
+                        adminPanel.setVisible(true);
                     }
                 }
             });
@@ -795,17 +755,11 @@ public class UserInterface extends JFrame{
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     viewPanel.setVisible(false);
-                    try {
-                        if(ClientData.getInstance().IsPatient()){
-                            patientPanel.setVisible(true);
-                        }
-                        else{
-                            adminPanel.setVisible(true);
-                        }
-                    } catch (NotBoundException ex) {
-                        throw new RuntimeException(ex);
-                    } catch (RemoteException ex) {
-                        throw new RuntimeException(ex);
+                    if(ClientInterface.getInstance().IsPatient()){
+                        patientPanel.setVisible(true);
+                    }
+                    else{
+                        adminPanel.setVisible(true);
                     }
                 }
             });

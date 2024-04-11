@@ -31,7 +31,6 @@ public interface Center {
     //original interface
     @WebMethod
     String RegisterUser(short cityType, short userType);
-
     @WebMethod
     boolean CheckUser(short city, String userID);
 }

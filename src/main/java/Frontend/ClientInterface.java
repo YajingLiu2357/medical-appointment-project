@@ -18,6 +18,28 @@ public class ClientInterface {
         return instance;
     }
 
+    public void Initialize(String cityValue_, String userType_) {
+        List<String> rawResults = RequestProcessor.getInstance().RegisterUser(cityValue_, userType_);
+        String result = ResultProcessor.getInstance().RegisterUserResultsProcess(rawResults);
+        userID = result;
+    }
+
+    public void Initialize(String ID){
+        this.userID = ID;
+    }
+
+    public boolean IsValidUserName(String userID) {
+        List<String> rawResults = RequestProcessor.getInstance().IsValidUserName(userID);
+        boolean result = ResultProcessor.getInstance().IsValidUserName(rawResults);
+        return result;
+    }
+
+    public boolean IsPatient(){
+        Type.UserEntity userInstance = new Type.UserEntity();
+        userInstance.DeserializeUser(userID);
+        return userInstance.user == Type.UserType.P;
+    }
+
     private ClientInterface() {
     }
 

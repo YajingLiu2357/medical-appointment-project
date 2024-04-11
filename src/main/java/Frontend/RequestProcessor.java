@@ -57,6 +57,11 @@ public class RequestProcessor {
         return res;
     }
 
+    public List<String> RegisterUser(String cityValue, String userType) {
+        String results = OperationUDP("RegisterUser", cityValue + "," + userType);
+        return SeperateReplicaReply(results);
+    }
+
     public List<String> IsValidUserName(String userID) {
         String results = OperationUDP("IsValidUserName", userID);
         return SeperateReplicaReply(results);
