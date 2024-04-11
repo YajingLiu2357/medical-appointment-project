@@ -1,4 +1,9 @@
-package dataReplies;
+package Replica3.dataReplies;
+
+import Replica3.constants.Constants;
+import Replica3.servers.HospitalMTL;
+import Replica3.servers.HospitalQUE;
+import Replica3.servers.HospitalSHE;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -6,10 +11,6 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.util.List;
 
-import constants.*;
-import servers.HospitalMTL;
-import servers.HospitalQUE;
-import servers.HospitalSHE;
 
 public class ReplyRecord extends Thread{
     String portNum = "";

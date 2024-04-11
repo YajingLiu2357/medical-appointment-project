@@ -1,4 +1,4 @@
-package webService;
+package Replica3.webService;
 
 import javax.jws.WebMethod;
 import javax.jws.WebService;

@@ -1,13 +1,16 @@
-package replies;
+package Replica4.replies;
+
+import Replica4.entities.Constants;
+import Replica4.main.ServerMTL;
+import Replica4.main.ServerQUE;
+import Replica4.main.ServerSHE;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.util.Map;
-import main.*;
 
-import entities.Constants;
 
 public class ReplyAppointment extends Thread{
     String portNum = "";
