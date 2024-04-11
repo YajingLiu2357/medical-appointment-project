@@ -498,10 +498,17 @@ public class QuebecServer implements Appointment{
                 String bookCancel = bookData[0];
                 String patientID = bookData[1];
                 String appointmentID = bookData[2];
-                URL url = new URL("http://localhost:8080/appointment/que?wsdl");
-                QName qname = new QName("http://dhms.service.com/", "QuebecServerService");
-                Service service = Service.create(url, qname);
-                Appointment que = service.getPort(Appointment.class);
+                Appointment que = null;
+                try{
+                    String ip = InetAddress.getLocalHost().getHostAddress();
+                    URL urlQUE = new URL("http://"+ip+":8080/appointment/que?wsdl");
+                    QName qnameQUE = new QName("http://dhms.service.com.Replica2/", "QuebecServerService");
+                    Service serviceQUE = Service.create(urlQUE, qnameQUE);
+                    QName qnameQUE2 = new QName("http://dhms.service.com.Replica2/", "QuebecServerPort");
+                    que = serviceQUE.getPort(qnameQUE2, Appointment.class);
+                }catch (MalformedURLException e){
+                    e.printStackTrace();
+                }
                 if (bookCancel.equals(Constants.BOOK)){
                     String appointmentType = bookData[3];
                     String log = que.bookAppointment(patientID, appointmentID, appointmentType);
