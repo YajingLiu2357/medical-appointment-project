@@ -14,10 +14,16 @@ public class ResultProcessor {
         return instance;
     }
 
-    public boolean IsValidUserName(List<Boolean> results){
+    public String RegisterUserResultsProcess(List<String> results){
         //todo: check the validation of the results
 
         return results.get(0);
+    }
+
+    public boolean IsValidUserName(List<String> results){
+        //todo: check the validation of the results
+
+        return true;
     }
 
     public String BookAppointmentResultsProcess(List<String> results){

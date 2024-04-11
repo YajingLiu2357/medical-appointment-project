@@ -18,6 +18,28 @@ public class ClientInterface {
         return instance;
     }
 
+    public void Initialize(String cityValue_, String userType_) {
+        List<String> rawResults = RequestProcessor.getInstance().RegisterUser(cityValue_, userType_);
+        String result = ResultProcessor.getInstance().RegisterUserResultsProcess(rawResults);
+        userID = result;
+    }
+
+    public void Initialize(String ID){
+        this.userID = ID;
+    }
+
+    public boolean IsValidUserName(String userID) {
+        List<String> rawResults = RequestProcessor.getInstance().IsValidUserName(userID);
+        boolean result = ResultProcessor.getInstance().IsValidUserName(rawResults);
+        return result;
+    }
+
+    public boolean IsPatient(){
+        Type.UserEntity userInstance = new Type.UserEntity();
+        userInstance.DeserializeUser(userID);
+        return userInstance.user == Type.UserType.P;
+    }
+
     private ClientInterface() {
     }
 
@@ -49,7 +71,8 @@ public class ClientInterface {
     public String AddAppointment(String city_, String time_, String date_, String month_, String year_, String type_, int capacity)
     {
         List<Object> processedInput = DataProcessor.getInstance().AddAppointmentDataProcessor(city_, time_, date_, month_, year_, type_, capacity);
-        List<String> rawResults = RequestProcessor.getInstance().AddAppointment((String) processedInput.get(0), (String) processedInput.get(1), (String) processedInput.get(2));
+        System.out.println("processedInput:" + processedInput.get(0) + " " + processedInput.get(1) + " " +processedInput.get(2));
+        List<String> rawResults = RequestProcessor.getInstance().AddAppointment((String) processedInput.get(0), (String) processedInput.get(1), processedInput.get(2).toString());
         String result = ResultProcessor.getInstance().AddAppointmentResultsProcess(rawResults);
         String processedResult = DataProcessor.getInstance().AddAppointmentResultProcessor(result);
         return processedResult;

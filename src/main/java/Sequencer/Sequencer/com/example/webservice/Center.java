@@ -1,5 +1,6 @@
 package com.example.webservice;
 
+
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
@@ -31,6 +32,7 @@ public interface Center {
     //original interface
     @WebMethod
     String RegisterUser(short cityType, short userType);
+
     @WebMethod
     boolean CheckUser(short city, String userID);
 }
