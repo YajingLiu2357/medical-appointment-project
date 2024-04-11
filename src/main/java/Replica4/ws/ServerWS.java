@@ -1,4 +1,4 @@
-package ws;
+package Replica4.ws;
 
 import javax.jws.WebMethod;
 import javax.jws.WebService;

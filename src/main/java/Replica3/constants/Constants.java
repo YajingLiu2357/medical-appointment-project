@@ -1,4 +1,4 @@
-package constants;
+package Replica3.constants;
 
 public final class Constants {
     private Constants(){
@@ -47,9 +47,9 @@ public final class Constants {
     public static final String SPACE = " ";
     public static final String NEW_LINE = "\n";
 
-    public static final String LOG_FILE_PATH = "./src/main/java/Replica2/com/service/dhms/logs/";
-    public static final String DATA_APPOINTMENT = "./src/data/appointment/";
-    public static final String DATA_RECORD = "./src/data/record/";
+    public static final String LOG_FILE_PATH = "./src/main/java/Replica3/logs/";
+    public static final String DATA_APPOINTMENT = "./src/main/java/Replica3/dataTexts/appointment/";
+    public static final String DATA_RECORD = "./src/main/java/Replica3/dataTexts/record/";
     public static final String MONTREAL_TXT = "Montreal.txt";
     public static final String QUEBEC_TXT = "Quebec.txt";
     public static final String SHERBROOKE_TXT = "Sherbrooke.txt";

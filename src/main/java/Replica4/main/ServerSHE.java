@@ -1,4 +1,9 @@
-package main;
+package Replica4.main;
+
+import Replica4.entities.Constants;
+import Replica4.replies.ReplyAppointment;
+import Replica4.replies.ReplyRecord;
+import Replica4.ws.ServerWS;
 
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
@@ -10,13 +15,11 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import ws.*;
-import entities.*;
-import replies.*;
 
-@WebService(endpointInterface = "ws.ServerWS")
+
+@WebService(endpointInterface = "Replica4.ws.ServerWS")
 @SOAPBinding(style = SOAPBinding.Style.RPC)
-public class ServerSHE implements ServerWS{
+public class ServerSHE implements ServerWS {
     private ConcurrentHashMap <String, ConcurrentHashMap<String, Integer>> appointmentOuter;
     private List<String> recordList;
     private List<String> recordOtherCities;

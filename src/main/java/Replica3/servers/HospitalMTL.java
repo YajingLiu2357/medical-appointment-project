@@ -1,4 +1,9 @@
-package servers;
+package Replica3.servers;
+
+import Replica3.constants.Constants;
+import Replica3.dataReplies.ReplyAppointment;
+import Replica3.dataReplies.ReplyRecord;
+import Replica3.webService.HospitalWS;
 
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
@@ -10,12 +15,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import webService.*;
-import constants.*;
-import dataReplies.*;
 
 
-@WebService(endpointInterface = "ws.ServerWS")
+@WebService(endpointInterface = "Replica3.webService.HospitalWS")
 @SOAPBinding(style = SOAPBinding.Style.RPC)
 public class HospitalMTL implements HospitalWS {
     private ConcurrentHashMap <String, ConcurrentHashMap<String, Integer>> appointmentOuter;
