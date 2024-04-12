@@ -4,13 +4,8 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.URL;
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.xml.namespace.QName;
-import javax.xml.ws.Service;
 
 public class RequestProcessor {
     //sequencer port number
@@ -53,7 +48,7 @@ public class RequestProcessor {
 
     private List<String> SeperateReplicaReply(String reply){
         List<String> res = new ArrayList<>();
-        String[] results = reply.split(":");
+        String[] results = reply.split("&");
         for(int i =0; i < results.length; ++i){
             res.add(results[i]);
         }
