@@ -130,7 +130,8 @@ public class ServerSHE implements ServerWS {
             returnVal = appointmentAll.toString();
         }else{
             log = time + Constants.LIST_APPOINTMENT_AVAILABILITY + Constants.REQUEST_PARAMETERS + appointmentType + Constants.REQUEST_SUCCESS + Constants.RESPONSE + Constants.APPOINTMENT_TYPE_NOT_EXIST;
-            returnVal = Constants.APPOINTMENT_TYPE_NOT_EXIST;
+//            returnVal = Constants.APPOINTMENT_TYPE_NOT_EXIST;
+            returnVal = appointmentAll.toString();
         }
         writeLog(log);
         return returnVal;
@@ -213,7 +214,8 @@ public class ServerSHE implements ServerWS {
             returnVal = schedule.toString();
         }else{
             log = time + Constants.GET_APPOINTMENT_SCHEDULE + Constants.REQUEST_PARAMETERS + patientID + Constants.REQUEST_SUCCESS + Constants.RESPONSE + Constants.NO_APPOINTMENT;
-            returnVal = Constants.NO_APPOINTMENT;
+//            returnVal = Constants.NO_APPOINTMENT;
+            returnVal = schedule.toString();
         }
         writeLog(log);
         return returnVal;

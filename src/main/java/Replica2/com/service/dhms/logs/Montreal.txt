@@ -3,3 +3,8 @@
 2024/04/12 18:36:57 List appointment availability. Request parameters: Physician Request: success Response: {MTLM010124=10, MTLM010224=10}
 2024/04/12 18:37:21 List appointment availability. Request parameters: Physician Request: success Response: {MTLM010124=10, MTLM010224=10}
 2024/04/12 18:39:02 List appointment availability. Request parameters: Physician Request: success Response: {MTLM010124=10, MTLM010224=10}
+2024/04/12 19:38:04 Add appointment. Request parameters: MTLM010124 Physician 10 Request: success Response: success
+2024/04/12 19:38:15 Add appointment. Request parameters: MTLM020124 Surgeon 10 Request: success Response: success
+2024/04/12 19:38:18 List appointment availability. Request parameters: Physician Request: success Response: {MTLM010124=10}
+2024/04/12 19:38:18 List appointment availability. Request parameters: Surgeon Request: success Response: {MTLM020124=10}
+2024/04/12 19:38:18 List appointment availability. Request parameters: Dental Request: success Response: fail because appointment type does not exist
