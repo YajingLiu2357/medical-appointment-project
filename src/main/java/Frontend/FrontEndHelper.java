@@ -1,6 +1,6 @@
 package Frontend;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -11,28 +11,28 @@ import java.util.Scanner;
 
 public class FrontEndHelper {
     static List<String> results = new ArrayList<>();
-    static List<String> replicaManagerIPs = new ArrayList<>();
+    static List<String> ipAddresses = new ArrayList<>();
     static List<Integer> replicaManagerPorts = new ArrayList<>();
 
     public static void setResults(List<String> results) {
         FrontEndHelper.results = results;
     }
 
-    public static void setReplicaManagerIPs(List<String> replicaManagerIPs) {
-        FrontEndHelper.replicaManagerIPs = replicaManagerIPs;
-    }
-
-    public static void setReplicaManagerPorts(List<Integer> replicaManagerPorts) {
-        FrontEndHelper.replicaManagerPorts = replicaManagerPorts;
-    }
-
-    public static List<String> getReplicaManagerIPs() {
-        return replicaManagerIPs;
-    }
-
-    public static List<Integer> getReplicaManagerPorts() {
-        return replicaManagerPorts;
-    }
+//    public static void setReplicaManagerIPs(List<String> replicaManagerIPs) {
+//        FrontEndHelper.ipAddresses = replicaManagerIPs;
+//    }
+//
+//    public static void setReplicaManagerPorts(List<Integer> replicaManagerPorts) {
+//        FrontEndHelper.replicaManagerPorts = replicaManagerPorts;
+//    }
+//
+//    public static List<String> getReplicaManagerIPs() {
+//        return ipAddresses;
+//    }
+//
+//    public static List<Integer> getReplicaManagerPorts() {
+//        return replicaManagerPorts;
+//    }
 
     public static String getMajority(){
         String majority = "";
@@ -71,8 +71,8 @@ public class FrontEndHelper {
     }
     public static void notifyAllReplicaManager(int replicaNo, String errorType){
         try {
-            for (int i = 0; i < replicaManagerIPs.size(); i++) {
-                InetAddress address = InetAddress.getByName(replicaManagerIPs.get(i));
+            for (int i = 0; i < ipAddresses.size(); i++) {
+                InetAddress address = InetAddress.getByName(ipAddresses.get(i));
                 int portNum = replicaManagerPorts.get(i);
                 notifyReplicaManager(replicaNo, errorType, address, portNum);
             }
@@ -111,16 +111,54 @@ public class FrontEndHelper {
     }
     public static void inputIP(){
         Scanner scanner = new Scanner(System.in);
+        List<String> l_ipAddresses = new ArrayList<>();
         for (int i = 0; i < 4; i++){
             System.out.println("Enter the IP address of replica " + (i+1) + ": ");
-            replicaManagerIPs.add(scanner.nextLine());
+            l_ipAddresses.add(scanner.nextLine());
         }
+        setIpAddresses(l_ipAddresses);
     }
     public static void inputPort(){
         Scanner scanner = new Scanner(System.in);
         for (int i = 0; i < 4; i++){
             System.out.println("Enter the port number of replica " + (i+1) + ": ");
             replicaManagerPorts.add(scanner.nextInt());
+        }
+    }
+
+    public static List<String> getIpAddresses() {
+        String filePath = "./src/main/java/IP.txt";
+        ipAddresses = new ArrayList<>();
+        try{
+            FileReader fileReader = new FileReader(filePath);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            String line;
+            while ((line = bufferedReader.readLine()) != null){
+                ipAddresses.add(line);
+            }
+            bufferedReader.close();
+            fileReader.close();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        return ipAddresses;
+    }
+
+    public static void setIpAddresses(List<String> ipAddresses) {
+        String filePath = "./src/main/java/IP.txt";
+        try{
+            PrintWriter writer = new PrintWriter(filePath);
+            writer.print("");
+            writer.close();
+            FileWriter fileWriter = new FileWriter(filePath, true);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+            for (String ip : ipAddresses){
+                bufferedWriter.write(ip + "\n");
+            }
+            bufferedWriter.close();
+            fileWriter.close();
+        }catch (IOException e){
+            e.printStackTrace();
         }
     }
 }
