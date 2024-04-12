@@ -1,9 +1,6 @@
 package com.example.webservice;
 
 
-import java.io.IOException;
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
 import java.util.List;
 
 public class ClientInterface {

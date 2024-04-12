@@ -46,12 +46,12 @@ public class Sequencer {
     {
         List<String> results = new ArrayList<>();
         String[] splittedRequest = requestStr.split(":");
-        String[] splittedParams = splittedRequest[1].split(",");
-        for(int i =0; i <splittedRequest.length - 1;++i){
-            results.add(splittedRequest[i]);
-        }
-        for(int i=0; i<splittedParams.length; ++i){
-            results.add(splittedParams[i]);
+        results.add(splittedRequest[0]);
+        if(splittedRequest.length > 1){
+            String[] splittedParams = splittedRequest[1].split(",");
+            for(int i=0; i<splittedParams.length; ++i){
+                results.add(splittedParams[i]);
+            }
         }
         return results;
     }
@@ -72,7 +72,8 @@ public class Sequencer {
 
                 String frontEndMethod = requestInformations.get(0);
 
-                System.out.println("the method:" + frontEndMethod + " parameters:" + requestInformations.get(1));
+
+                System.out.println("the method:" + frontEndMethod );
 
                 // Assign unique sequence number
                 int seqNum = sequenceNumber.getAndIncrement();
@@ -84,47 +85,47 @@ public class Sequencer {
                 if(frontEndMethod.equals("IsValidUserName")){
                     boolean replica1Res =  Sequencer.Instance().replica1.CheckUser((short)Integer.parseInt(requestInformations.get(1)),
                             requestInformations.get(2));
-                    resCode = replica1Res + ":" + replica1Res + ":" + replica1Res + ":" + replica1Res;
+                    resCode = replica1Res + "&" + replica1Res + "&" + replica1Res + "&" + replica1Res;
                 }
                 else if(frontEndMethod.equals("RegisterUser")){
 
                     String replica1Res =  Sequencer.Instance().replica1.RegisterUser((short)Integer.parseInt(requestInformations.get(1)),
                             (short)Integer.parseInt(requestInformations.get(2)));
-                    resCode = replica1Res + ":" + replica1Res + ":" + replica1Res + ":" + replica1Res;
+                    resCode = replica1Res + "&" + replica1Res + "&" + replica1Res + "&" + replica1Res;
                 }
                 else if(frontEndMethod.equals("BookAppointment")){
                     //todo: replica 1, 2, 3, 4
                     String replica1Res =  Sequencer.Instance().replica1.bookAppointment(requestInformations.get(1),
                             requestInformations.get(2), requestInformations.get(3));
-                    resCode = replica1Res + ":" + replica1Res + ":" + replica1Res + ":" + replica1Res;
+                    resCode = replica1Res + "&" + replica1Res + "&" + replica1Res + "&" + replica1Res;
                 }
                 else if(frontEndMethod.equals("CancelAppointment")){
                     String replica1Res = Sequencer.Instance().replica1.cancelAppointment(requestInformations.get(1),
                             requestInformations.get(2));
-                    resCode = replica1Res + ":" + replica1Res + ":" + replica1Res + ":" + replica1Res;
+                    resCode = replica1Res + "&" + replica1Res + "&" + replica1Res + "&" + replica1Res;
                 }
                 else if(frontEndMethod.equals("ViewBookedAppointments")){
                     String replica1Res = Sequencer.Instance().replica1.getAppointmentSchedule(requestInformations.get(1));
-                    resCode = replica1Res + ":" + replica1Res + ":" + replica1Res + ":" + replica1Res;
+                    resCode = replica1Res + "&" + replica1Res + "&" + replica1Res + "&" + replica1Res;
                 }
                 else if(frontEndMethod.equals("AddAppointment")){
                     String replica1Res = Sequencer.Instance().replica1.addAppointment(requestInformations.get(1),
                             requestInformations.get(2), Integer.parseInt(requestInformations.get(3)));
-                    resCode = replica1Res + ":" + replica1Res + ":" + replica1Res + ":" + replica1Res;
+                    resCode = replica1Res + "&" + replica1Res + "&" + replica1Res + "&" + replica1Res;
                 }
                 else if(frontEndMethod.equals("RemoveAppointment")){
                     String replica1Res = Sequencer.Instance().replica1.removeAppointment(
                             requestInformations.get(1),
                             requestInformations.get(2)
                     );
-                    resCode = replica1Res + ":" + replica1Res + ":" + replica1Res + ":" + replica1Res;
+                    resCode = replica1Res + "&" + replica1Res + "&" + replica1Res + "&" + replica1Res;
                 }
                 else if(frontEndMethod.equals("ViewAvailableAppointments")){
-                    String replica1Res = Sequencer.Instance().replica1.removeAppointment(
-                            requestInformations.get(1),
-                            requestInformations.get(2)
+                    String exchangedAvailableAppointments = Type.ExchangeAppointTypeCompatibility(Type.AppointmentType.PHYS);
+                    String replica1Res = Sequencer.Instance().replica1.listAppointmentAvailability(
+                            exchangedAvailableAppointments
                     );
-                    resCode = replica1Res + ":" + replica1Res + ":" + replica1Res + ":" + replica1Res;
+                    resCode = replica1Res + "&" + replica1Res + "&" + replica1Res + "&" + replica1Res;
                 }
                 else if(frontEndMethod.equals("SwapAppointment")){
                     String replica1Res = Sequencer.Instance().replica1.swapAppointment(
@@ -134,7 +135,7 @@ public class Sequencer {
                             requestInformations.get(4),
                             requestInformations.get(5)
                     );
-                    resCode = replica1Res + ":" + replica1Res + ":" + replica1Res + ":" + replica1Res;
+                    resCode = replica1Res + "&" + replica1Res + "&" + replica1Res + "&" + replica1Res;
                 }
 
                 System.out.println("Sent Data:" + resCode);

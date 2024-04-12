@@ -1,8 +1,6 @@
 package com.example.webservice;
 
-import javax.xml.ws.Endpoint;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
+
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 

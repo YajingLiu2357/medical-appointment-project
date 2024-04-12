@@ -53,7 +53,7 @@ public class RequestProcessor {
 
     private List<String> SeperateReplicaReply(String reply){
         List<String> res = new ArrayList<>();
-        String[] results = reply.split(":");
+        String[] results = reply.split("&");
         for(int i =0; i < results.length; ++i){
             res.add(results[i]);
         }
