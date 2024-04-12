@@ -1,3 +1,0 @@
-2024/04/11 23:10:04 Add appointment. Request parameters: MTLA080224 Physician 4 Request: success Response: success
-2024/04/11 23:10:04 Book appointment. Request parameters: MTLP0001 MTLA080224 Physician Request: success Response: success
-2024/04/11 23:10:04 Cancel appointment. Request parameters: MTLP0001 MTLA080224 Request: success Response: success

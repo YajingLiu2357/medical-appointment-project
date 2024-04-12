@@ -1,2 +1,0 @@
-2024/04/11 23:10:59 Add appointment. Request parameters: SHEA090224 Physician 4 Request: success Response: success
-2024/04/11 23:11:06 List appointment availability. Request parameters: Physician Request: success Response: {SHEA090224=4, MTLA080224=4, QUEA100224=1}
