@@ -12,3 +12,6 @@
 2024/03/12 18:36:55 List appointment. Request parameters:   Request: success Response: success
 2024/03/12 18:37:20 List appointment. Request parameters:   Request: success Response: success
 2024/03/12 18:39:01 List appointment. Request parameters:   Request: success Response: success
+2024/03/12 19:38:03 Add appointment. Request parameters: MTLM010124 Physician 10 Request: success Response: success
+2024/03/12 19:38:14 Add appointment. Request parameters: MTLM020124 Surgeon 10 Request: success Response: success
+2024/03/12 19:38:17 List appointment. Request parameters:   Request: success Response: success
