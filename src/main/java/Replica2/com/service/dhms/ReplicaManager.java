@@ -10,6 +10,7 @@ import java.net.SocketException;
 public class ReplicaManager {
     static int replicaNo = 2;
     static InetAddress ip;
+    static int errorTimes = 0;
     public static void main(String[] args) throws SocketException {
         // Create and initialize the actively replicated server subsystem
         Endpoint endpointMTL = null;
@@ -34,30 +35,34 @@ public class ReplicaManager {
                 socket.receive(receivePacket);
                 String [] data = new String(receivePacket.getData(), 0, receivePacket.getLength()).split(" ");
                 int replicaErrorNo = Integer.parseInt(data[0]);
-                String errorType = data[1];
+                String errorType = data[1] + " " + data[2];
                 InetAddress address = receivePacket.getAddress();
                 int port = receivePacket.getPort();
                 String reply = errorType + " information received";
                 DatagramPacket replyPacketBook = new DatagramPacket(reply.getBytes(), reply.length(), address, port);
                 socket.send(replyPacketBook);
                 if (replicaErrorNo == replicaNo){
-                    if (errorType == "Software failure"){
-                        ip = InetAddress.getLocalHost();
-                        MontrealServer mtl = new MontrealServer();
-                        QuebecServer que = new QuebecServer();
-                        SherbrookeServer she = new SherbrookeServer();
-                        endpointMTL.stop();
-                        endpointQUE.stop();
-                        endpointSHE.stop();
-                        Endpoint endpointMTLNew = Endpoint.publish("http://" + ip.getHostAddress() + ":8080/appointment/mtl", mtl);
-                        Endpoint endpointQUENew = Endpoint.publish("http://" + ip.getHostAddress() + ":8080/appointment/que", que);
-                        Endpoint endpointSHENew = Endpoint.publish("http://" + ip.getHostAddress() + ":8080/appointment/she", she);
-                        System.out.println("Replica2 recovers services." );
-                        mtl.recoverFromLog();
-                        que.recoverFromLog();
-                        she.recoverFromLog();
-                        System.out.println("Replica2 finishes recovery." );
-                    }else if (errorType == "Process crash"){
+                    if (errorType.equals("Software failure")){
+                        errorTimes++;
+                        if (errorTimes >= 3){
+                            errorTimes = 0;
+                            ip = InetAddress.getLocalHost();
+                            MontrealServer mtl = new MontrealServer();
+                            QuebecServer que = new QuebecServer();
+                            SherbrookeServer she = new SherbrookeServer();
+                            endpointMTL.stop();
+                            endpointQUE.stop();
+                            endpointSHE.stop();
+                            Endpoint endpointMTLNew = Endpoint.publish("http://" + ip.getHostAddress() + ":8080/appointment/mtl", mtl);
+                            Endpoint endpointQUENew = Endpoint.publish("http://" + ip.getHostAddress() + ":8080/appointment/que", que);
+                            Endpoint endpointSHENew = Endpoint.publish("http://" + ip.getHostAddress() + ":8080/appointment/she", she);
+                            System.out.println("Replica2 starts recovery." );
+                            mtl.recoverFromLog();
+                            que.recoverFromLog();
+                            she.recoverFromLog();
+                            System.out.println("Replica2 finishes recovery." );
+                        }
+                    }else if (errorType.equals("Process crash")){
                         ip = InetAddress.getLocalHost();
                         MontrealServer mtl = new MontrealServer();
                         QuebecServer que = new QuebecServer();
@@ -95,7 +100,7 @@ public class ReplicaManager {
                             }
                         });
                         webServicesThread3.start();
-                        System.out.println("Replica2 recovers services." );
+                        System.out.println("Replica2 starts recovery." );
                         mtl.recoverFromLog();
                         que.recoverFromLog();
                         she.recoverFromLog();

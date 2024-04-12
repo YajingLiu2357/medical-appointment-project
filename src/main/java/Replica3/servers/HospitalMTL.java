@@ -1,9 +1,9 @@
 package Replica3.servers;
 
-import Replica2.com.service.dhms.Appointment;
 import Replica3.constants.Constants;
 import Replica3.dataReplies.ReplyAppointment;
 import Replica3.dataReplies.ReplyRecord;
+import Replica3.softwareFailure.SoftwareFailure;
 import Replica3.webService.HospitalWS;
 
 import javax.jws.WebService;
@@ -55,6 +55,9 @@ public class HospitalMTL implements HospitalWS {
             returnVal = Constants.SUCCESS;
         }
         writeLog(log);
+        if (SoftwareFailure.isFailure()){
+            return SoftwareFailure.generateRandomReturn();
+        }
         return returnVal;
     }
 
@@ -82,11 +85,17 @@ public class HospitalMTL implements HospitalWS {
                         }
                         changeAppointmentData();
                         writeLog(log);
+                        if (SoftwareFailure.isFailure()){
+                            return SoftwareFailure.generateRandomReturn();
+                        }
                         return returnVal;
                     }else{
                         log = time + Constants.REMOVE_APPOINTMENT + Constants.REQUEST_PARAMETERS + appointmentID + Constants.SPACE + appointmentType + Constants.REQUEST_SUCCESS + Constants.RESPONSE + Constants.NO_NEXT_APPOINTMENT;
                         returnVal = Constants.NO_NEXT_APPOINTMENT;
                         writeLog(log);
+                        if (SoftwareFailure.isFailure()){
+                            return SoftwareFailure.generateRandomReturn();
+                        }
                         return returnVal;
                     }
                 }
@@ -104,6 +113,9 @@ public class HospitalMTL implements HospitalWS {
             returnVal = Constants.APPOINTMENT_NOT_EXIST;
         }
         writeLog(log);
+        if (SoftwareFailure.isFailure()){
+            return SoftwareFailure.generateRandomReturn();
+        }
         return returnVal;
     }
 
@@ -133,6 +145,9 @@ public class HospitalMTL implements HospitalWS {
             returnVal = Constants.APPOINTMENT_TYPE_NOT_EXIST;
         }
         writeLog(log);
+        if (SoftwareFailure.isFailure()){
+            return SoftwareFailure.generateRandomReturn();
+        }
         return returnVal;
     }
 
@@ -151,12 +166,18 @@ public class HospitalMTL implements HospitalWS {
                         log = time + Constants.BOOK_APPOINTMENT + Constants.REQUEST_PARAMETERS + patientID + Constants.SPACE + appointmentID + Constants.SPACE + appointmentType + Constants.REQUEST_SUCCESS + Constants.RESPONSE + Constants.SAME_APPOINTMENT;
                         returnVal = Constants.SAME_APPOINTMENT;
                         writeLog(log);
+                        if (SoftwareFailure.isFailure()){
+                            return SoftwareFailure.generateRandomReturn();
+                        }
                         return returnVal;
                     }
                     if(recordSplit[0].equals(patientID) && recordSplit[2].equals(appointmentType) && recordSplit[1].substring(4,10).equals(appointmentID.substring(4,10))){
                         log = time + Constants.BOOK_APPOINTMENT + Constants.REQUEST_PARAMETERS + patientID + Constants.SPACE + appointmentID + Constants.SPACE + appointmentType + Constants.REQUEST_SUCCESS + Constants.RESPONSE + Constants.HAVE_SAME_TYPE_APPOINTMENT_SAME_DAY;
                         returnVal = Constants.HAVE_SAME_TYPE_APPOINTMENT_SAME_DAY;
                         writeLog(log);
+                        if (SoftwareFailure.isFailure()){
+                            return SoftwareFailure.generateRandomReturn();
+                        }
                         return returnVal;
                     }
                     if(!recordSplit[0].substring(0, 3).equals(recordSplit[1].substring(0,3))){
@@ -168,6 +189,9 @@ public class HospitalMTL implements HospitalWS {
                         log = time + Constants.BOOK_APPOINTMENT + Constants.REQUEST_PARAMETERS + patientID + Constants.SPACE + appointmentID + Constants.SPACE  + appointmentType + Constants.REQUEST_SUCCESS + Constants.RESPONSE + Constants.THREE_APPOINTMENTS_OTHER_CITIES;
                         returnVal = Constants.THREE_APPOINTMENTS_OTHER_CITIES;
                         writeLog(log);
+                        if (SoftwareFailure.isFailure()){
+                            return SoftwareFailure.generateRandomReturn();
+                        }
                         return returnVal;
                     }
                 }
@@ -183,6 +207,9 @@ public class HospitalMTL implements HospitalWS {
                 returnVal = Constants.NO_CAPACITY;
             }
             writeLog(log);
+            if (SoftwareFailure.isFailure()){
+                return SoftwareFailure.generateRandomReturn();
+            }
             return returnVal;
         }else{
             String serverName = appointmentID.substring(0,3);
@@ -216,6 +243,9 @@ public class HospitalMTL implements HospitalWS {
             returnVal = Constants.NO_APPOINTMENT;
         }
         writeLog(log);
+        if (SoftwareFailure.isFailure()){
+            return SoftwareFailure.generateRandomReturn();
+        }
         return returnVal;
     }
 
@@ -235,12 +265,18 @@ public class HospitalMTL implements HospitalWS {
                     changeAppointmentData();
                     changeRecordData();
                     writeLog(log);
+                    if (SoftwareFailure.isFailure()){
+                        return SoftwareFailure.generateRandomReturn();
+                    }
                     return returnVal;
                 }
             }
             log = time + Constants.CANCEL_APPOINTMENT + Constants.REQUEST_PARAMETERS + patientID + Constants.SPACE + appointmentID + Constants.REQUEST_SUCCESS + Constants.RESPONSE + Constants.APPOINTMENT_NOT_EXIST;
             returnVal = Constants.APPOINTMENT_NOT_EXIST;
             writeLog(log);
+            if (SoftwareFailure.isFailure()){
+                return SoftwareFailure.generateRandomReturn();
+            }
             return returnVal;
         }else{
             String serverName = appointmentID.substring(0,3);
@@ -271,6 +307,9 @@ public class HospitalMTL implements HospitalWS {
             log = time + Constants.SWAP_APPOINTMENT + Constants.REQUEST_PARAMETERS + patientID + Constants.SPACE + oldAppointmentID + Constants.SPACE + oldAppointmentType + Constants.SPACE + newAppointmentID + Constants.SPACE + newAppointmentType + Constants.REQUEST_SUCCESS + Constants.RESPONSE + Constants.APPOINTMENT_NOT_EXIST;
             returnVal = Constants.APPOINTMENT_NOT_EXIST;
             writeLog(log);
+            if (SoftwareFailure.isFailure()){
+                return SoftwareFailure.generateRandomReturn();
+            }
             return returnVal;
         }
         String serverName = newAppointmentID.substring(0,3);
@@ -289,6 +328,9 @@ public class HospitalMTL implements HospitalWS {
             log = time + Constants.SWAP_APPOINTMENT + Constants.REQUEST_PARAMETERS + patientID + Constants.SPACE + oldAppointmentID + Constants.SPACE + oldAppointmentType + Constants.SPACE + newAppointmentID + Constants.SPACE + newAppointmentType + Constants.REQUEST_SUCCESS + Constants.RESPONSE + Constants.NO_CAPACITY;
             returnVal = Constants.NO_CAPACITY;
             writeLog(log);
+            if (SoftwareFailure.isFailure()){
+                return SoftwareFailure.generateRandomReturn();
+            }
             return returnVal;
         }
         String logBook = bookAppointment(patientID, newAppointmentID, newAppointmentType);
@@ -307,6 +349,9 @@ public class HospitalMTL implements HospitalWS {
             returnVal = Constants.NO_CAPACITY;
         }
         writeLog(log);
+        if (SoftwareFailure.isFailure()){
+            return SoftwareFailure.generateRandomReturn();
+        }
         return returnVal;
     }
     public void changeRecordData(){
@@ -684,7 +729,6 @@ public class HospitalMTL implements HospitalWS {
                 }
             }
             fileReader.close();
-            System.out.println("Finished recovering from log");
         } catch (Exception e) {
             e.printStackTrace();
         }

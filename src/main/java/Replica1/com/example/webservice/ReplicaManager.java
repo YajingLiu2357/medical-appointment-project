@@ -14,6 +14,7 @@ import java.net.SocketException;
 public class ReplicaManager {
     static int replicaNo = 1;
     static InetAddress ip;
+    static int errorTimes = 0;
     public static void main(String[] args) throws SocketException {
         try{
             ip = InetAddress.getLocalHost();
@@ -21,7 +22,7 @@ public class ReplicaManager {
         }catch (Exception e) {
         }
         DatagramSocket socket = new DatagramSocket(5010);
-        System.out.println("Replica1 manager is running at port" + socket.getLocalPort());
+        System.out.println("Replica1 manager is running at port " + socket.getLocalPort());
         try{
             byte[] receiveData = new byte[1024];
             DatagramPacket receivePacket;
@@ -30,22 +31,26 @@ public class ReplicaManager {
                 socket.receive(receivePacket);
                 String [] data = new String(receivePacket.getData(), 0, receivePacket.getLength()).split(" ");
                 int replicaErrorNo = Integer.parseInt(data[0]);
-                String errorType = data[1];
+                String errorType = data[1] + " " + data[2];
                 InetAddress address = receivePacket.getAddress();
                 int port = receivePacket.getPort();
                 String reply = errorType + " information received";
                 DatagramPacket replyPacketBook = new DatagramPacket(reply.getBytes(), reply.length(), address, port);
                 socket.send(replyPacketBook);
                 if (replicaErrorNo == replicaNo){
-                    if (errorType == "Software failure"){
-                        ip = InetAddress.getLocalHost();
-                        CenterImpl center = new CenterImpl();
-                        System.out.println("Replica1 starts recovery." );
-                        center.recoverFromLog("MTL");
-                        center.recoverFromLog("QUE");
-                        center.recoverFromLog("SHE");
-                        System.out.println("Replica1 finishes recovery." );
-                    } else if (errorType == "Process crash"){
+                    if (errorType.equals("Software failure")){
+                        errorTimes++;
+                        if (errorTimes >= 3){
+                            errorTimes = 0;
+                            ip = InetAddress.getLocalHost();
+                            CenterImpl center = new CenterImpl();
+                            System.out.println("Replica1 starts recovery." );
+                            center.recoverFromLog("MTL");
+                            center.recoverFromLog("QUE");
+                            center.recoverFromLog("SHE");
+                            System.out.println("Replica1 finishes recovery." );
+                        }
+                    } else if (errorType.equals("Process crash")){
                         try{
                             ip = InetAddress.getLocalHost();
                             System.out.println("Replica1 services are published at " + ip.getHostAddress());
