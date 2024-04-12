@@ -26,6 +26,7 @@ public class ServerMTL implements ServerWS {
     private ConcurrentHashMap <String, ConcurrentHashMap<String, Integer>> appointmentOuter;
     private List<String> recordList;
     private List<String> recordOtherCities;
+    static String ipAddr = "";
     public ServerMTL(){
         appointmentOuter = new ConcurrentHashMap<>();
         recordList = Collections.synchronizedList(new LinkedList<>());
@@ -609,8 +610,14 @@ public class ServerMTL implements ServerWS {
                 String appointmentID = bookData[2];
                 ServerWS mtl = null;
                 try{
+//                    String ip = InetAddress.getLocalHost().getHostAddress();
+//                    URL urlMTL = new URL("http://"+ip+":8080/appointment/mtl?wsdl");
+//                    QName qnameMTL = new QName("http://main.Replica4/", "ServerMTLService");
+//                    Service serviceMTL = Service.create(urlMTL, qnameMTL);
+//                    QName qnameMTL2 = new QName("http://main.Replica4/", "ServerMTLPort");
+//                    mtl = serviceMTL.getPort(qnameMTL2, ServerWS.class);
                     String ip = InetAddress.getLocalHost().getHostAddress();
-                    URL urlMTL = new URL("http://"+ip+":8080/appointment/mtl?wsdl");
+                    URL urlMTL = new URL("http://"+ipAddr+":8080/appointment/mtl?wsdl");
                     QName qnameMTL = new QName("http://main.Replica4/", "ServerMTLService");
                     Service serviceMTL = Service.create(urlMTL, qnameMTL);
                     QName qnameMTL2 = new QName("http://main.Replica4/", "ServerMTLPort");

@@ -1,0 +1,5 @@
+2024/04/12 18:30:49 Add appointment. Request parameters: MTLM010124 Physician 10 Request: success Response: success
+2024/04/12 18:31:15 Add appointment. Request parameters: MTLM010224 Physician 10 Request: success Response: success
+2024/04/12 18:36:57 List appointment availability. Request parameters: Physician Request: success Response: {MTLM010124=10, MTLM010224=10}
+2024/04/12 18:37:21 List appointment availability. Request parameters: Physician Request: success Response: {MTLM010124=10, MTLM010224=10}
+2024/04/12 18:39:02 List appointment availability. Request parameters: Physician Request: success Response: {MTLM010124=10, MTLM010224=10}

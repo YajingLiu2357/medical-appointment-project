@@ -23,6 +23,7 @@ public class ServerSHE implements ServerWS {
     private ConcurrentHashMap <String, ConcurrentHashMap<String, Integer>> appointmentOuter;
     private List<String> recordList;
     private List<String> recordOtherCities;
+    static String ipAddr = "";
     public ServerSHE(){
         appointmentOuter = new ConcurrentHashMap<>();
         recordList = Collections.synchronizedList(new LinkedList<>());
@@ -606,8 +607,14 @@ public class ServerSHE implements ServerWS {
                 String appointmentID = bookData[2];
                 ServerWS she = null;
                 try{
+//                    String ip = InetAddress.getLocalHost().getHostAddress();
+//                    URL urlSHE = new URL("http://"+ip+":8080/appointment/she?wsdl");
+//                    QName qnameSHE = new QName("http://main.Replica4/", "ServerSHEService");
+//                    Service serviceSHE = Service.create(urlSHE, qnameSHE);
+//                    QName qnameSHE2 = new QName("http://main.Replica4/", "ServerSHEPort");
+//                    she = serviceSHE.getPort(qnameSHE2, ServerWS.class);
                     String ip = InetAddress.getLocalHost().getHostAddress();
-                    URL urlSHE = new URL("http://"+ip+":8080/appointment/she?wsdl");
+                    URL urlSHE = new URL("http://"+ipAddr+":8080/appointment/she?wsdl");
                     QName qnameSHE = new QName("http://main.Replica4/", "ServerSHEService");
                     Service serviceSHE = Service.create(urlSHE, qnameSHE);
                     QName qnameSHE2 = new QName("http://main.Replica4/", "ServerSHEPort");
