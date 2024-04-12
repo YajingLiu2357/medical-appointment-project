@@ -1,6 +1,8 @@
 package Replica1.com.example.webservice;
 
+import java.net.InetAddress;
 import java.net.MalformedURLException;
+import java.net.UnknownHostException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.HashMap;
@@ -82,25 +84,29 @@ public class CentralServer {
         hospitalServerList.put(Type.CityType.SHE, 1101);
 
         try{
-            URL urlMTL = new URL("http://localhost:8081/MTL?wsdl");
-            QName qNameMTL = new QName("http://webservice.example.com/", "HospitalImplService");
+            String ip = InetAddress.getLocalHost().getHostAddress();
+            URL urlMTL = new URL("http://"+ip+":8081/MTL?wsdl");
+            QName qNameMTL = new QName("http://webservice.example.com.Replica1/", "HospitalImplService");
             Service serviceMTL = Service.create(urlMTL, qNameMTL);
-            Hospital MTLService = serviceMTL.getPort(Hospital.class);
+            QName qNameMTL2 = new QName("http://webservice.example.com.Replica1/", "HospitalImplPort");
+            Hospital MTLService = serviceMTL.getPort(qNameMTL2, Hospital.class);
 
-            URL urlQUE = new URL("http://localhost:8082/QUE?wsdl");
-            QName qNameQUE = new QName("http://webservice.example.com/", "HospitalImplService");
+            URL urlQUE = new URL("http://"+ip+":8082/QUE?wsdl");
+            QName qNameQUE = new QName("http://webservice.example.com.Replica1/", "HospitalImplService");
             Service serviceQUE = Service.create(urlQUE, qNameQUE);
-            Hospital QUEService = serviceQUE.getPort(Hospital.class);
+            QName qNameQUE2 = new QName("http://webservice.example.com.Replica1/", "HospitalImplPort");
+            Hospital QUEService = serviceQUE.getPort(qNameQUE2, Hospital.class);
 
-            URL urlSHE = new URL("http://localhost:8083/SHE?wsdl");
-            QName qNameSHE = new QName("http://webservice.example.com/", "HospitalImplService");
+            URL urlSHE = new URL("http://"+ip+":8083/SHE?wsdl");
+            QName qNameSHE = new QName("http://webservice.example.com.Replica1/", "HospitalImplService");
             Service serviceSHE = Service.create(urlSHE, qNameSHE);
-            Hospital SHEService = serviceSHE.getPort(Hospital.class);
+            QName qNameSHE2 = new QName("http://webservice.example.com.Replica1/", "HospitalImplPort");
+            Hospital SHEService = serviceSHE.getPort(qNameSHE2, Hospital.class);
 
             cityOperations.put(Type.CityType.MTL, MTLService);
             cityOperations.put(Type.CityType.QUE, QUEService);
             cityOperations.put(Type.CityType.SHE, SHEService);
-        } catch (MalformedURLException e) {
+        } catch (MalformedURLException | UnknownHostException e) {
             throw new RuntimeException(e);
         }
     }
