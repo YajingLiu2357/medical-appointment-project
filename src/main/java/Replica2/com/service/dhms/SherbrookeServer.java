@@ -598,10 +598,17 @@ public class SherbrookeServer implements Appointment{
                 String bookCancel = bookData[0];
                 String patientID = bookData[1];
                 String appointmentID = bookData[2];
-                URL url = new URL("http://localhost:8080/appointment/she?wsdl");
-                QName qname = new QName("http://dhms.service.com/", "SherbrookeServerService");
-                Service service = Service.create(url, qname);
-                Appointment she = service.getPort(Appointment.class);
+                Appointment she = null;
+                try{
+                    String ip = InetAddress.getLocalHost().getHostAddress();
+                    URL urlSHE = new URL("http://"+ip+":8080/appointment/she?wsdl");
+                    QName qnameSHE = new QName("http://dhms.service.com.Replica2/", "SherbrookeServerService");
+                    Service serviceSHE = Service.create(urlSHE, qnameSHE);
+                    QName qnameSHE2 = new QName("http://dhms.service.com.Replica2/", "SherbrookeServerPort");
+                    she = serviceSHE.getPort(qnameSHE2, Appointment.class);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
                 if (bookCancel.equals(Constants.BOOK)){
                     String appointmentType = bookData[3];
                     String log = she.bookAppointment(patientID, appointmentID, appointmentType);

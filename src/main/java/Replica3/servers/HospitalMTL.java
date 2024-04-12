@@ -1,5 +1,6 @@
 package Replica3.servers;
 
+import Replica2.com.service.dhms.Appointment;
 import Replica3.constants.Constants;
 import Replica3.dataReplies.ReplyAppointment;
 import Replica3.dataReplies.ReplyRecord;
@@ -604,10 +605,17 @@ public class HospitalMTL implements HospitalWS {
                 String bookCancel = bookData[0];
                 String patientID = bookData[1];
                 String appointmentID = bookData[2];
-                URL url = new URL("http://localhost:8080/appointment/mtl?wsdl");
-                QName qname = new QName("http://dhms.service.com/", "MontrealServerService");
-                Service service = Service.create(url, qname);
-                HospitalWS mtl = service.getPort(HospitalWS.class);
+                HospitalWS mtl = null;
+                try{
+                    String ip = InetAddress.getLocalHost().getHostAddress();
+                    URL urlMTL = new URL("http://"+ip+":8080/appointment/mtl?wsdl");
+                    QName qnameMTL = new QName("http://servers.Replica3/", "HospitalMTLService");
+                    Service serviceMTL = Service.create(urlMTL, qnameMTL);
+                    QName qnameMTL2 = new QName("http://servers.Replica3/", "HospitalMTLPort");
+                    mtl = serviceMTL.getPort(qnameMTL2, HospitalWS.class);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
                 if (bookCancel.equals(Constants.BOOK)){
                     String appointmentType = bookData[3];
                     String log = mtl.bookAppointment(patientID, appointmentID, appointmentType);
