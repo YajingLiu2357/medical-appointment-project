@@ -1,4 +1,4 @@
-package com.example.webservice;
+package Frontend;
 
 import javax.swing.*;
 import java.awt.*;

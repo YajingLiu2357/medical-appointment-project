@@ -1,4 +1,4 @@
-package com.example.webservice;
+package Frontend;
 
 import javax.jws.WebMethod;
 import javax.jws.WebService;

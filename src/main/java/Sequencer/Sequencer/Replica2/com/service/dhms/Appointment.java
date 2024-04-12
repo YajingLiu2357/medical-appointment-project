@@ -1,4 +1,4 @@
-package Replica2.com.service.dhms;
+package Sequencer.Sequencer.Replica2.com.service.dhms;
 
 import javax.jws.WebMethod;
 import javax.jws.WebService;

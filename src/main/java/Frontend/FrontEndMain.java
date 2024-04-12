@@ -1,5 +1,4 @@
-package com.example.webservice;
-
+package Frontend;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;

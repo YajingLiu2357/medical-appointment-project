@@ -1,4 +1,4 @@
-package com.example.webservice;
+package Frontend;
 
 import java.io.IOException;
 import java.net.DatagramPacket;

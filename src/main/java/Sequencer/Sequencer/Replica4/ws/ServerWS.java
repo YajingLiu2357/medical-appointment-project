@@ -1,4 +1,4 @@
-package Replica4.ws;
+package Sequencer.Sequencer.Replica4.ws;
 
 import javax.jws.WebMethod;
 import javax.jws.WebService;

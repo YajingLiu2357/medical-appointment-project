@@ -1,4 +1,4 @@
-
+package Sequencer.Sequencer;
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 import java.net.DatagramPacket;
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import Replica2.com.service.dhms.Appointment;
-import com.example.webservice.Center;
+import Sequencer.Sequencer.com.example.webservice.Center;
 
 public class Sequencer {
     // Port numbers for server replicas
