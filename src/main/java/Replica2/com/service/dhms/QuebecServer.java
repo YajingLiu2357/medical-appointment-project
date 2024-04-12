@@ -677,7 +677,6 @@ public class QuebecServer implements Appointment{
                 }
             }
             fileReader.close();
-            System.out.println("Finished recovering from log");
         } catch (Exception e) {
             e.printStackTrace();
         }

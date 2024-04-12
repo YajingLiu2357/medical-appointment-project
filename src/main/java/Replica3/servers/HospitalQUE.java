@@ -682,7 +682,6 @@ public class HospitalQUE implements HospitalWS {
                 }
             }
             fileReader.close();
-            System.out.println("Finished recovering from log");
         } catch (Exception e) {
             e.printStackTrace();
         }

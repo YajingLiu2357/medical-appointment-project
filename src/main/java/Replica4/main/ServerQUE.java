@@ -682,7 +682,6 @@ public class ServerQUE implements ServerWS {
                 }
             }
             fileReader.close();
-            System.out.println("Finished recovering from log");
         } catch (Exception e) {
             e.printStackTrace();
         }
