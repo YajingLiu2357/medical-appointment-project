@@ -126,12 +126,12 @@ public class Sequencer {
         String res = "{";
         for(int i = 0; i < physicsStr.size(); i++) {
             res += physicsStr.get(i);
-            if(i != physicsStr.size() - 1 && (surgenStr.size() == 0) && (dentsStr.size() == 0))
+            if(!(i == physicsStr.size() - 1 && (surgenStr.size() == 0) && (dentsStr.size() == 0)))
                 res += ", ";
         }
         for(int i = 0; i < surgenStr.size(); i++) {
             res += surgenStr.get(i);
-            if(i != physicsStr.size() - 1 && (dentsStr.size() == 0))
+            if(!(i == physicsStr.size() - 1 && (dentsStr.size() == 0)))
                 res += ", ";
         }
         for(int i = 0; i < dentsStr.size(); i++) {
