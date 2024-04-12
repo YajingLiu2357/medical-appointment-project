@@ -1,0 +1,14 @@
+2024/03/12 16:40:27 Add appointment. Request parameters: MTLM010124 Physician 10 Request: success Response: success
+2024/03/12 16:44:50 Add appointment. Request parameters: MTLM010124 Physician 10 Request: success Response: fail because appointment already exists
+2024/03/12 16:49:01 Add appointment. Request parameters: MTLM010124 Physician 10 Request: success Response: fail because appointment already exists
+2024/03/12 16:53:07 Add appointment. Request parameters: MTLM010124 Physician 10 Request: success Response: success
+2024/03/12 16:56:30 Add appointment. Request parameters: MTLM010124 Physician 10 Request: success Response: fail because appointment already exists
+2024/03/12 16:58:32 Add appointment. Request parameters: MTLM020124 Physician 10 Request: success Response: success
+2024/03/12 17:02:41 Add appointment. Request parameters: MTLM030124 Physician 10 Request: success Response: success
+2024/03/12 17:06:22 Add appointment. Request parameters: MTLM040124 Physician 10 Request: success Response: success
+2024/03/12 18:30:48 Add appointment. Request parameters: MTLM010124 Physician 10 Request: success Response: success
+2024/03/12 18:31:14 Add appointment. Request parameters: MTLM010224 Physician 10 Request: success Response: success
+2024/03/12 18:31:20 List appointment. Request parameters:   Request: success Response: success
+2024/03/12 18:36:55 List appointment. Request parameters:   Request: success Response: success
+2024/03/12 18:37:20 List appointment. Request parameters:   Request: success Response: success
+2024/03/12 18:39:01 List appointment. Request parameters:   Request: success Response: success
