@@ -24,6 +24,7 @@ public class HospitalMTL implements HospitalWS {
     private ConcurrentHashMap <String, ConcurrentHashMap<String, Integer>> appointmentOuter;
     private List<String> recordList;
     private List<String> recordOtherCities;
+    static String ipAddr = "";
     public HospitalMTL(){
         appointmentOuter = new ConcurrentHashMap<>();
         recordList = Collections.synchronizedList(new LinkedList<>());
@@ -652,8 +653,14 @@ public class HospitalMTL implements HospitalWS {
                 String appointmentID = bookData[2];
                 HospitalWS mtl = null;
                 try{
+//                    String ip = InetAddress.getLocalHost().getHostAddress();
+//                    URL urlMTL = new URL("http://"+ip+":8080/appointment/mtl?wsdl");
+//                    QName qnameMTL = new QName("http://servers.Replica3/", "HospitalMTLService");
+//                    Service serviceMTL = Service.create(urlMTL, qnameMTL);
+//                    QName qnameMTL2 = new QName("http://servers.Replica3/", "HospitalMTLPort");
+//                    mtl = serviceMTL.getPort(qnameMTL2, HospitalWS.class);
                     String ip = InetAddress.getLocalHost().getHostAddress();
-                    URL urlMTL = new URL("http://"+ip+":8080/appointment/mtl?wsdl");
+                    URL urlMTL = new URL("http://"+ipAddr+":8080/appointment/mtl?wsdl");
                     QName qnameMTL = new QName("http://servers.Replica3/", "HospitalMTLService");
                     Service serviceMTL = Service.create(urlMTL, qnameMTL);
                     QName qnameMTL2 = new QName("http://servers.Replica3/", "HospitalMTLPort");

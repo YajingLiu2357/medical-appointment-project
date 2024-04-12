@@ -17,6 +17,7 @@ public class SherbrookeServer implements Appointment{
     private ConcurrentHashMap <String, ConcurrentHashMap<String, Integer>> appointmentOuter;
     private List<String> recordList;
     private List<String> recordOtherCities;
+    static String ipAddr = "";
     public SherbrookeServer(){
         appointmentOuter = new ConcurrentHashMap<>();
         recordList = Collections.synchronizedList(new LinkedList<>());
@@ -600,8 +601,14 @@ public class SherbrookeServer implements Appointment{
                 String appointmentID = bookData[2];
                 Appointment she = null;
                 try{
+//                    String ip = InetAddress.getLocalHost().getHostAddress();
+//                    URL urlSHE = new URL("http://"+ip+":8080/appointment/she?wsdl");
+//                    QName qnameSHE = new QName("http://dhms.service.com.Replica2/", "SherbrookeServerService");
+//                    Service serviceSHE = Service.create(urlSHE, qnameSHE);
+//                    QName qnameSHE2 = new QName("http://dhms.service.com.Replica2/", "SherbrookeServerPort");
+//                    she = serviceSHE.getPort(qnameSHE2, Appointment.class);
                     String ip = InetAddress.getLocalHost().getHostAddress();
-                    URL urlSHE = new URL("http://"+ip+":8080/appointment/she?wsdl");
+                    URL urlSHE = new URL("http://"+ipAddr+":8080/appointment/she?wsdl");
                     QName qnameSHE = new QName("http://dhms.service.com.Replica2/", "SherbrookeServerService");
                     Service serviceSHE = Service.create(urlSHE, qnameSHE);
                     QName qnameSHE2 = new QName("http://dhms.service.com.Replica2/", "SherbrookeServerPort");

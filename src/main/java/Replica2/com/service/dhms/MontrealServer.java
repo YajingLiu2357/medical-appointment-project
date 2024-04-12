@@ -19,6 +19,7 @@ public class MontrealServer implements Appointment {
     private ConcurrentHashMap <String, ConcurrentHashMap<String, Integer>> appointmentOuter;
     private List<String> recordList;
     private List<String> recordOtherCities;
+    static String ipAddr = "";
     protected MontrealServer(){
         appointmentOuter = new ConcurrentHashMap<>();
         recordList = Collections.synchronizedList(new LinkedList<>());
@@ -29,6 +30,7 @@ public class MontrealServer implements Appointment {
 
     @Override
     public String addAppointment(String appointmentID, String appointmentType, int capacity) {
+        System.out.println("Add" + appointmentID + " " + appointmentType + " " + capacity);
         String time = getTime();
         ConcurrentHashMap<String, Integer> appointmentInner = appointmentOuter.get(appointmentType);
         String log = "";
@@ -602,8 +604,14 @@ public class MontrealServer implements Appointment {
                 String appointmentID = bookData[2];
                 Appointment mtl = null;
                 try{
+//                    String ip = InetAddress.getLocalHost().getHostAddress();
+//                    URL urlMTL = new URL("http://"+ip+":8080/appointment/mtl?wsdl");
+//                    QName qnameMTL = new QName("http://dhms.service.com.Replica2/", "MontrealServerService");
+//                    Service serviceMTL = Service.create(urlMTL, qnameMTL);
+//                    QName qnameMTL2 = new QName("http://dhms.service.com.Replica2/", "MontrealServerPort");
+//                    mtl = serviceMTL.getPort(qnameMTL2, Appointment.class);
                     String ip = InetAddress.getLocalHost().getHostAddress();
-                    URL urlMTL = new URL("http://"+ip+":8080/appointment/mtl?wsdl");
+                    URL urlMTL = new URL("http://"+ipAddr+":8080/appointment/mtl?wsdl");
                     QName qnameMTL = new QName("http://dhms.service.com.Replica2/", "MontrealServerService");
                     Service serviceMTL = Service.create(urlMTL, qnameMTL);
                     QName qnameMTL2 = new QName("http://dhms.service.com.Replica2/", "MontrealServerPort");

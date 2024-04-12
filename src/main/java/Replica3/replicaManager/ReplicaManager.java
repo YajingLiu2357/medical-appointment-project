@@ -19,6 +19,7 @@ public class ReplicaManager {
     // IP address of this replica
     static InetAddress ip;
     static int errorTimes = 0;
+    static String ipAddr = "";
     public static void main(String[] args) throws SocketException {
         // Initialize and publish the web services for Montreal, Quebec, and Sherbrooke
         // Create and initialize the actively replicated server subsystem
@@ -26,12 +27,18 @@ public class ReplicaManager {
         Endpoint endpointQUE = null;
         Endpoint endpointSHE = null;
         try {
+//            InetAddress ip = InetAddress.getLocalHost();
+//            // Publish the web services with unique endpoints
+//            endpointMTL = Endpoint.publish("http://" + ip.getHostAddress() + ":8080/appointment/mtl", new HospitalMTL());
+//            endpointQUE = Endpoint.publish("http://" + ip.getHostAddress() + ":8080/appointment/que", new HospitalQUE());
+//            endpointSHE = Endpoint.publish("http://" + ip.getHostAddress() + ":8080/appointment/she", new HospitalSHE());
+//            System.out.println("Replica3 services are published at " +ip.getHostAddress());
             InetAddress ip = InetAddress.getLocalHost();
             // Publish the web services with unique endpoints
-            endpointMTL = Endpoint.publish("http://" + ip.getHostAddress() + ":8080/appointment/mtl", new HospitalMTL());
-            endpointQUE = Endpoint.publish("http://" + ip.getHostAddress() + ":8080/appointment/que", new HospitalQUE());
-            endpointSHE = Endpoint.publish("http://" + ip.getHostAddress() + ":8080/appointment/she", new HospitalSHE());
-            System.out.println("Replica3 services are published at " +ip.getHostAddress());
+            endpointMTL = Endpoint.publish("http://" + ipAddr + ":8080/appointment/mtl", new HospitalMTL());
+            endpointQUE = Endpoint.publish("http://" + ipAddr + ":8080/appointment/que", new HospitalQUE());
+            endpointSHE = Endpoint.publish("http://" + ipAddr + ":8080/appointment/she", new HospitalSHE());
+            System.out.println("Replica3 services are published at " + ipAddr);
         } catch (Exception e) {
         }
         // Check the software failure
@@ -62,9 +69,12 @@ public class ReplicaManager {
                             endpointMTL.stop();
                             endpointQUE.stop();
                             endpointSHE.stop();
-                            Endpoint endpointMTLNew = Endpoint.publish("http://" + ip.getHostAddress() + ":8080/appointment/mtl", mtl);
-                            Endpoint endpointQUENew = Endpoint.publish("http://" + ip.getHostAddress() + ":8080/appointment/que", que);
-                            Endpoint endpointSHENew = Endpoint.publish("http://" + ip.getHostAddress() + ":8080/appointment/she", she);
+//                            Endpoint endpointMTLNew = Endpoint.publish("http://" + ip.getHostAddress() + ":8080/appointment/mtl", mtl);
+//                            Endpoint endpointQUENew = Endpoint.publish("http://" + ip.getHostAddress() + ":8080/appointment/que", que);
+//                            Endpoint endpointSHENew = Endpoint.publish("http://" + ip.getHostAddress() + ":8080/appointment/she", she);
+                            Endpoint endpointMTLNew = Endpoint.publish("http://" + ipAddr + ":8080/appointment/mtl", mtl);
+                            Endpoint endpointQUENew = Endpoint.publish("http://" + ipAddr + ":8080/appointment/que", que);
+                            Endpoint endpointSHENew = Endpoint.publish("http://" + ipAddr + ":8080/appointment/she", she);
                             System.out.println("Replica 3 starts recovery." );
                             mtl.recoverFromLog();
                             que.recoverFromLog();
@@ -79,9 +89,12 @@ public class ReplicaManager {
                         endpointMTL.stop();
                         endpointQUE.stop();
                         endpointSHE.stop();
-                        Endpoint endpointMTLNew = Endpoint.publish("http://" + ip.getHostAddress() + ":8080/appointment/mtl", mtl);
-                        Endpoint endpointQUENew = Endpoint.publish("http://" + ip.getHostAddress() + ":8080/appointment/que", que);
-                        Endpoint endpointSHENew = Endpoint.publish("http://" + ip.getHostAddress() + ":8080/appointment/she", she);
+//                        Endpoint endpointMTLNew = Endpoint.publish("http://" + ip.getHostAddress() + ":8080/appointment/mtl", mtl);
+//                        Endpoint endpointQUENew = Endpoint.publish("http://" + ip.getHostAddress() + ":8080/appointment/que", que);
+//                        Endpoint endpointSHENew = Endpoint.publish("http://" + ip.getHostAddress() + ":8080/appointment/she", she);
+                        Endpoint endpointMTLNew = Endpoint.publish("http://" + ipAddr + ":8080/appointment/mtl", mtl);
+                        Endpoint endpointQUENew = Endpoint.publish("http://" + ipAddr + ":8080/appointment/que", que);
+                        Endpoint endpointSHENew = Endpoint.publish("http://" + ipAddr + ":8080/appointment/she", she);
                         Thread webServicesThread = new Thread(() -> {
                             String[] arguments = new String[] {"123"};
                             try {
