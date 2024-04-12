@@ -73,7 +73,7 @@ public class FrontEndHelper {
         try {
             for (int i = 0; i < ipAddresses.size(); i++) {
                 InetAddress address = InetAddress.getByName(ipAddresses.get(i));
-                int portNum = replicaManagerPorts.get(i);
+                int portNum = 5010;
                 notifyReplicaManager(replicaNo, errorType, address, portNum);
             }
         } catch (UnknownHostException e) {
