@@ -70,13 +70,14 @@ public class FrontEndHelper {
         }
     }
     public static void notifyAllReplicaManager(int replicaNo, String errorType){
-        try {
-            for (int i = 0; i < ipAddresses.size(); i++) {
-                InetAddress address = InetAddress.getByName(ipAddresses.get(i));
+        try{
+            List<String> l_ipAddresses = getIpAddresses();
+            for(int i = 0; i < l_ipAddresses.size(); i++){
+                InetAddress address = InetAddress.getByName(l_ipAddresses.get(i));
                 int portNum = 5010;
                 notifyReplicaManager(replicaNo, errorType, address, portNum);
             }
-        } catch (UnknownHostException e) {
+        }catch (UnknownHostException e) {
             e.printStackTrace();
         }
     }

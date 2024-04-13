@@ -1,1 +1,5 @@
 2024/04/12 18:38:55 Add appointment. Request parameters: QUEM010124 Surgeon 10 Request: success Response: success
+2024/04/12 19:57:55 Add appointment. Request parameters: QUEM050124 Physician 10 Request: success Response: success
+2024/04/12 20:00:38 Book appointment. Request parameters: MTLP0001 QUEM050124 Physician Request: success Response: success
+2024/04/12 20:10:28 Add appointment. Request parameters: QUEM080124 Physician 10 Request: success Response: success
+2024/04/12 20:13:00 Book appointment. Request parameters: MTLP0001 QUEM080124 Physician Request: success Response: success

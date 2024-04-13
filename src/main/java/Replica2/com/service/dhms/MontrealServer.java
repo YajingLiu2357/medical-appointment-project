@@ -19,7 +19,7 @@ public class MontrealServer implements Appointment {
     private ConcurrentHashMap <String, ConcurrentHashMap<String, Integer>> appointmentOuter;
     private List<String> recordList;
     private List<String> recordOtherCities;
-    static String ipAddr = "";
+    static String ipAddr = "172.20.10.9";
     protected MontrealServer(){
         appointmentOuter = new ConcurrentHashMap<>();
         recordList = Collections.synchronizedList(new LinkedList<>());

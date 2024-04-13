@@ -11,7 +11,7 @@ public class ReplicaManager {
     static int replicaNo = 2;
     static InetAddress ip;
     static int errorTimes = 0;
-    static String ipAddr = "";
+    static String ipAddr = "172.20.10.9";
     public static void main(String[] args) throws SocketException {
         // Create and initialize the actively replicated server subsystem
         Endpoint endpointMTL = null;
