@@ -1,1 +1,3 @@
 2024/03/12 18:38:54 Add appointment. Request parameters: QUEM010124 Surgeon 10 Request: success Response: success
+2024/03/12 19:57:54 Add appointment. Request parameters: QUEM050124 Physician 10 Request: success Response: success
+2024/03/12 20:10:27 Add appointment. Request parameters: QUEM080124 Physician 10 Request: success Response: success

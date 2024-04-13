@@ -15,3 +15,27 @@
 2024/03/12 19:38:03 Add appointment. Request parameters: MTLM010124 Physician 10 Request: success Response: success
 2024/03/12 19:38:14 Add appointment. Request parameters: MTLM020124 Surgeon 10 Request: success Response: success
 2024/03/12 19:38:17 List appointment. Request parameters:   Request: success Response: success
+2024/03/12 19:56:17 Add appointment. Request parameters: MTLM010124 Physician 10 Request: success Response: success
+2024/03/12 19:56:26 Add appointment. Request parameters: MTLM040124 Dental 10 Request: success Response: success
+2024/03/12 19:56:29 List appointment. Request parameters:   Request: success Response: success
+2024/03/12 19:57:57 List appointment. Request parameters:   Request: success Response: success
+2024/03/12 19:59:55 Book appointment. Request parameters: MTLP0001 MTLM010124 Physician Request: success Response: success
+2024/03/12 20:00:37 Swap appointment. Request parameters: MTLP0001 MTLM010124 MTLP0001 QUEM050124 Physician Request: success Response: success
+2024/03/12 20:00:38 Swap appointment. Request parameters: MTLP0001 MTLM010124 MTLP0001 QUEM050124 Physician Request: success Response: fail because appointment does not exist
+2024/03/12 20:00:38 Swap appointment. Request parameters: MTLP0001 MTLM010124 MTLP0001 QUEM050124 Physician Request: success Response: fail because appointment does not exist
+2024/03/12 20:01:37 Swap appointment. Request parameters: MTLP0001 MTLM010124 MTLP0001 QUEM050124 Physician Request: success Response: fail because appointment does not exist
+2024/03/12 20:04:05 Get appointment schedule. Request parameters: MTLP0001 Request: success Response: success
+2024/03/12 20:05:40 Swap appointment. Request parameters: MTLP0001 QUEM050124 MTLP0001 MTLM010124 Physician Request: success Response: success
+2024/03/12 20:09:00 Add appointment. Request parameters: MTLM010124 Physician 10 Request: success Response: success
+2024/03/12 20:09:12 Add appointment. Request parameters: MTLM060124 Dental 10 Request: success Response: success
+2024/03/12 20:10:34 List appointment. Request parameters:   Request: success Response: success
+2024/03/12 20:11:41 Book appointment. Request parameters: MTLP0001 MTLM010124 Physician Request: success Response: success
+2024/03/12 20:11:46 Get appointment schedule. Request parameters: MTLP0001 Request: success Response: success
+2024/03/12 20:12:58 Swap appointment. Request parameters: MTLP0001 MTLM010124 MTLP0001 QUEM080124 Physician Request: success Response: success
+2024/03/12 20:13:05 Get appointment schedule. Request parameters: MTLP0001 Request: success Response: success
+2024/03/12 20:25:25 Add appointment. Request parameters: MTLM010524 Surgeon 3 Request: success Response: success
+2024/03/12 20:25:46 List appointment. Request parameters:   Request: success Response: success
+2024/03/12 20:26:16 List appointment. Request parameters:   Request: success Response: success
+2024/03/12 20:32:26 Add appointment. Request parameters: MTLM010124 Physician 10 Request: success Response: success
+2024/03/12 20:32:44 Add appointment. Request parameters: MTLM040124 Dental 10 Request: success Response: success
+2024/03/12 20:32:53 List appointment. Request parameters:   Request: success Response: success

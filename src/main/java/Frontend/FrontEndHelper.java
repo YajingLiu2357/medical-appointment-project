@@ -49,7 +49,7 @@ public class FrontEndHelper {
                 count = tempCount;
             }
         }
-        if (count > results.size()/2){
+        if (count >= results.size()/2){
             return majority;
         }else{
             return "Majority not found";
