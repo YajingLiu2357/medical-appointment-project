@@ -3,6 +3,7 @@ package Replica3.replicaManager;
 import Replica3.servers.HospitalMTL;
 import Replica3.servers.HospitalQUE;
 import Replica3.servers.HospitalSHE;
+import Replica3.softwareFailure.SoftwareFailure;
 
 import javax.xml.ws.Endpoint;
 import java.io.IOException;
@@ -62,6 +63,7 @@ public class ReplicaManager {
                     if (errorType.equals("Software failure")){
                         errorTimes++;
                         if (errorTimes >= 3){
+                            SoftwareFailure.changeErrorFlagData("false");
                             ip = InetAddress.getLocalHost();
                             HospitalMTL mtl = new HospitalMTL();
                             HospitalQUE que = new HospitalQUE();
@@ -82,6 +84,7 @@ public class ReplicaManager {
                             System.out.println("Replica3 finishes recovery." );
                         }
                     }else if (errorType.equals("Process crash")){
+                        SoftwareFailure.changeErrorFlagData("false");
                         ip = InetAddress.getLocalHost();
                         HospitalMTL mtl = new HospitalMTL();
                         HospitalQUE que = new HospitalQUE();

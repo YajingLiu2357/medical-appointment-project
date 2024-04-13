@@ -1,0 +1,26 @@
+2024/04/12 19:56:16 Add appointment. Request parameters: MTLM010124 Physician 10 Request: success Response: success
+2024/04/12 19:56:25 Add appointment. Request parameters: MTLM040124 Dental 10 Request: success Response: success
+2024/04/12 19:56:28 List appointment availability. Request parameters: Physician Request: success Response: {MTLM010124=10}
+2024/04/12 19:56:28 List appointment availability. Request parameters: Surgeon Request: success Response: fail because appointment type does not exist
+2024/04/12 19:56:28 List appointment availability. Request parameters: Dental Request: success Response: {MTLM040124=10}
+2024/04/12 19:57:56 List appointment availability. Request parameters: Physician Request: success Response: {QUEM050124=10, MTLM010124=10}
+2024/04/12 19:57:56 List appointment availability. Request parameters: Surgeon Request: success Response: fail because appointment type does not exist
+2024/04/12 19:57:56 List appointment availability. Request parameters: Dental Request: success Response: {MTLM040124=10}
+2024/04/12 19:59:54 Book appointment. Request parameters: MTLP0001 MTLM010124 Physician Request: success Response: success
+2024/04/12 20:00:36 Cancel appointment. Request parameters: MTLP0001 MTLM010124 Request: success Response: success
+2024/04/12 20:00:36 Swap appointment. Request parameters: MTLP0001 MTLM010124 Physician QUEM050124 Physician Request: success Response: success
+2024/04/12 20:00:37 Swap appointment. Request parameters: MTLP0001 MTLM010124 Physician QUEM050124 Physician Request: success Response: fail because appointment does not exist
+2024/04/12 20:00:37 Swap appointment. Request parameters: MTLP0001 MTLM010124 Physician QUEM050124 Physician Request: success Response: fail because appointment does not exist
+2024/04/12 20:01:36 Swap appointment. Request parameters: MTLP0001 MTLM010124 Physician QUEM050124 Physician Request: success Response: fail because appointment does not exist
+2024/04/12 20:04:04 Get appointment schedule. Request parameters: MTLP0001 Request: success Response: [MTLP0001 QUEM050124 Physician]
+2024/04/12 20:05:39 Swap appointment. Request parameters: MTLP0001 QUEM050124 Physician MTLM010124 Physician Request: success Response: fail because appointment does not exist
+2024/04/12 20:08:59 Add appointment. Request parameters: MTLM010124 Physician 10 Request: success Response: success
+2024/04/12 20:09:11 Add appointment. Request parameters: MTLM060124 Dental 10 Request: success Response: success
+2024/04/12 20:10:32 List appointment availability. Request parameters: Physician Request: success Response: {QUEM080124=10, MTLM010124=10}
+2024/04/12 20:10:33 List appointment availability. Request parameters: Surgeon Request: success Response: fail because appointment type does not exist
+2024/04/12 20:10:33 List appointment availability. Request parameters: Dental Request: success Response: {MTLM060124=10}
+2024/04/12 20:11:40 Book appointment. Request parameters: MTLP0001 MTLM010124 Physician Request: success Response: success
+2024/04/12 20:11:44 Get appointment schedule. Request parameters: MTLP0001 Request: success Response: [MTLP0001 MTLM010124 Physician]
+2024/04/12 20:12:58 Cancel appointment. Request parameters: MTLP0001 MTLM010124 Request: success Response: success
+2024/04/12 20:12:58 Swap appointment. Request parameters: MTLP0001 MTLM010124 Physician QUEM080124 Physician Request: success Response: success
+2024/04/12 20:13:04 Get appointment schedule. Request parameters: MTLP0001 Request: success Response: [MTLP0001 QUEM080124 Physician]
